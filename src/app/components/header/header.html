@@ -1,0 +1,32 @@
+<header class="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-md border-b">
+    <nav class="mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+
+        <div class="flex items-center gap-2">
+            <a [routerLink]="['/']" class="font-bold text-xl tracking-tighter font-mono italic">
+                Lifey
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6 md:gap-10">
+            <!-- Desktop Navigation Menu -->
+            <ul class="hidden md:flex gap-8">
+                @for (link of navLinks; track link.href) {
+                <li>
+                    <a [routerLink]="link.href"
+                        class="text-xs font-mono uppercase tracking-widest hover:text-primary transition-colors duration-200">
+                        {{ link.label }}
+                    </a>
+                </li>
+                }
+            </ul>
+
+            <!-- Decorative vertical divider -->
+            <div class="h-5 w-[1px] hidden md:block"></div>
+
+            <div class="hidden md:flex items-center gap-4">
+            </div>
+
+
+        </div>
+    </nav>
+</header>

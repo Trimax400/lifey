@@ -1,0 +1,15 @@
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-header',
+  imports: [RouterModule],
+  templateUrl: './header.html',
+  styleUrl: './header.css',
+})
+export class HeaderComponent {
+  navLinks = [
+    { href: '/', label: 'home' },
+    { href: '/dashboard', label: 'dashboard' }
+  ];
+}

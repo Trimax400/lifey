@@ -1,0 +1,61 @@
+<div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-3xl shadow-xl border border-slate-100">
+    <header class="mb-8">
+        <h2 class="text-2xl font-black text-slate-800">New Transaction</h2>
+        <p class="text-slate-500 text-sm font-medium">Record your flow of money.</p>
+    </header>
+
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+        <div class="flex p-1 bg-slate-100 rounded-xl">
+            <button type="button" (click)="setType('expense')"
+                [class]="transactionForm.get('type')?.value === 'expense' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500'"
+                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all">
+                Expense
+            </button>
+            <button type="button" (click)="setType('income')"
+                [class]="transactionForm.get('type')?.value === 'income' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500'"
+                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all">
+                Income
+            </button>
+        </div>
+
+        <div>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Amount</label>
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                <input type="number" formControlName="amount"
+                    class="w-full pl-10 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-2xl font-mono focus:ring-2 focus:ring-emerald-500 transition-all"
+                    placeholder="0.00">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Description</label>
+            <input type="text" formControlName="label"
+                class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. Weekly Groceries">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Category</label>
+                <select formControlName="category"
+                    class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500">
+                    @for (category of currentCategories; track category) {
+                    <option [value]="category">{{ category }}</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Date</label>
+                <input type="date" formControlName="date"
+                    class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500">
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="transactionForm.invalid"
+            class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 text-white font-bold rounded-2xl shadow-lg shadow-emerald-100 transition-all transform active:scale-95">
+            Save Transaction
+        </button>
+    </form>
+</div>
