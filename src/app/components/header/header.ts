@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { SupabaseService } from '../../services/supabase';
 
 @Component({
   selector: 'app-header',
@@ -12,4 +13,21 @@ export class HeaderComponent {
     { href: '/', label: 'home' },
     { href: '/dashboard', label: 'dashboard' }
   ];
+
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {}
+
+  async logout() {
+    try {
+      const { error } = await this.supabaseService.signOut();
+      
+      if (!error) {
+        this.router.navigate(['/login']); // Redirige vers la page de connexion
+      }
+    } catch (error) {
+      console.error('Erreur inattendue lors de la déconnexion:', error);
+    }
+  }
 }
