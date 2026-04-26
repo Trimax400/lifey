@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, OnChanges, SimpleChanges, Input, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,16 +6,11 @@ import * as d3 from 'd3';
   templateUrl: './pie-chart.html',
   styleUrls: ['./pie-chart.css']
 })
-export class PieChartComponent implements OnInit {
+export class PieChartComponent implements OnInit, OnChanges {
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
-  private data = [
-    { label: 'Housing', value: 300 },
-    { label: 'Food', value: 200 },
-    { label: 'Transport', value: 150 },
-    { label: 'Health', value: 100 },
-    { label: 'Entertainment', value: 250 }
-  ];
+  @Input() data: { label: string, value: number }[] = [];
+  @Input() emptyMessage: string = 'No data available.';
 
   private margin = 20;
   private width = 600;
@@ -29,6 +24,14 @@ export class PieChartComponent implements OnInit {
     this.createSvg();
     this.createColors();
     this.drawChart();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && this.chartContainer) {
+      this.createSvg();
+      this.createColors();
+      this.drawChart();
+    }
   }
 
   private createSvg(): void {
@@ -51,6 +54,8 @@ export class PieChartComponent implements OnInit {
   }
 
   private drawChart(): void {
+    if (!this.data || this.data.length === 0) return;
+
     const pie = d3.pie<any>().value((d: any) => d.value);
     const total = d3.sum(this.data, d => d.value);
 

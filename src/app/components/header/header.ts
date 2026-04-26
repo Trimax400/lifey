@@ -24,7 +24,7 @@ export class HeaderComponent {
       const { error } = await this.supabaseService.signOut();
       
       if (!error) {
-        this.router.navigate(['/login']); // Redirige vers la page de connexion
+        this.router.navigate(['/login']);
       }
     } catch (error) {
       console.error('Erreur inattendue lors de la déconnexion:', error);

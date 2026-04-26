@@ -6,8 +6,8 @@ export interface Transaction {
   amount: number;
   label: string;
   category: string;
-  date: Date;
+  date: string | Date;
   isRecurring: boolean;
   frequency?: RecurrenceFrequency;
-  endDate?: Date;
+  endDate?: string | Date;
 }

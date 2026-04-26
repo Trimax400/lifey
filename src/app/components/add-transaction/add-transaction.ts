@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { SupabaseService } from '../../services/supabase';
 
 @Component({
   selector: 'app-add-transaction',
@@ -9,6 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-transaction.html'
 })
 export class AddTransactionComponent implements OnInit {
+  isLoading: boolean = false;
   transactionForm!: FormGroup;
 
   expenseCategories = ['Food', 'Housing', 'Transport', 'Health', 'Entertainment', 'Subscriptions', 'Other'];
@@ -21,7 +24,7 @@ export class AddTransactionComponent implements OnInit {
       : this.expenseCategories;
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router, private supabaseService: SupabaseService) {}
 
   ngOnInit(): void {
     this.transactionForm = this.fb.group({
@@ -42,9 +45,25 @@ export class AddTransactionComponent implements OnInit {
     this.transactionForm.patchValue({ type });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.transactionForm.valid) {
-      console.log('Data to save:', this.transactionForm.value);
+      this.isLoading = true;
+      try {
+        const formValue = this.transactionForm.value;
+        const newTransaction = {
+          ...formValue,
+          isRecurring: false
+        };
+        
+        const { error } = await this.supabaseService.addTransaction(newTransaction);
+        if (error) throw error;
+        
+        this.router.navigate(['/dashboard']);
+      } catch (error) {
+        console.error('Erreur lors de l\'ajout de la transaction:', error);
+      } finally {
+        this.isLoading = false;
+      }
     }
   }
 }

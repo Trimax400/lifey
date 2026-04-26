@@ -1,7 +1,7 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core'; // Ajout de OnInit
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink, ActivatedRoute } from '@angular/router'; // Ajout de ActivatedRoute
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 
 @Component({
