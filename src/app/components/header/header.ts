@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 
@@ -9,15 +9,14 @@ import { SupabaseService } from '../../services/supabase';
   styleUrl: './header.css',
 })
 export class HeaderComponent {
+  private supabaseService = inject(SupabaseService);
+  private router = inject(Router);
+
   navLinks = [
     { href: '/', label: 'home' },
     { href: '/dashboard', label: 'dashboard' }
   ];
 
-  constructor(
-    private supabaseService: SupabaseService,
-    private router: Router
-  ) {}
 
   async logout() {
     try {

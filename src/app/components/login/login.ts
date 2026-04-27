@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
@@ -10,7 +10,18 @@ import { SupabaseService } from '../../services/supabase';
   templateUrl: './login.html',
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+
+  private fb = inject(FormBuilder);
+  private supabaseService = inject(SupabaseService);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+
+  loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
+
   errorMessage: string = '';
   isLoading: boolean = false;
   
@@ -19,19 +30,6 @@ export class LoginComponent implements OnInit {
   isResending: boolean = false;
   
   successMessage: string = '';
-
-  constructor(
-    private fb: FormBuilder,
-    private supabaseService: SupabaseService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
-  ) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-  }
 
   ngOnInit() {
     this.route.fragment.subscribe((fragment) => {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
 import { CommonModule } from '@angular/common';
 
@@ -10,21 +10,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './signup.html',
 })
 export class SignupComponent {
-  signupForm: FormGroup;
+  private fb = inject(FormBuilder);
+  private supabaseService = inject(SupabaseService);
+  
+  signupForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
   errorMessage: string = '';
   successMessage: string = '';
   isLoading: boolean = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private supabaseService: SupabaseService,
-    private router: Router
-  ) {
-    this.signupForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
 
   async onSubmit() {
     if (this.signupForm.invalid) {

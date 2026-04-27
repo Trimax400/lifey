@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SupabaseService } from './supabase';
+import { RecurrenceService } from './recurrence';
 
-describe('Supabase', () => {
-  let service: SupabaseService;
+describe('recurrence', () => {
+  let service: RecurrenceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SupabaseService);
+    service = TestBed.inject(RecurrenceService);
   });
 
   it('should be created', () => {

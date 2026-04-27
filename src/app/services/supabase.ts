@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { ɵnormalizeQueryParams } from '@angular/common';
 
 
 @Injectable({
@@ -57,11 +58,16 @@ export class SupabaseService {
   }
 
 
-  async getTransactions() {
-    return await this.supabase
-      .from('transactions')
-      .select('*')
-      .order('date', { ascending: false });
+  async getTransactions(startDate?: string, endDate?: string) {
+    let query = this.supabase.from('transactions').select('*');
+
+    if (startDate && endDate) {
+      query = query.or(`isRecurring.eq.true,and(date.gte.${startDate},date.lte.${endDate})`);
+    }
+
+    console.log("Données renvoyées : ", await query.order('date', { ascending: false }));
+
+    return await query.order('date', { ascending: false });
   }
 
   async addTransaction(newTransaction: any) {

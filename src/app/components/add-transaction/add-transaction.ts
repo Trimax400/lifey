@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,6 +11,10 @@ import { SupabaseService } from '../../services/supabase';
   templateUrl: './add-transaction.html'
 })
 export class AddTransactionComponent implements OnInit {
+  private fb = inject(FormBuilder)
+  private router = inject(Router)
+  private supabaseService = inject(SupabaseService)
+  
   isLoading: boolean = false;
   transactionForm!: FormGroup;
 
@@ -24,7 +28,6 @@ export class AddTransactionComponent implements OnInit {
       : this.expenseCategories;
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private supabaseService: SupabaseService) {}
 
   ngOnInit(): void {
     this.transactionForm = this.fb.group({
@@ -32,7 +35,11 @@ export class AddTransactionComponent implements OnInit {
       amount: [null, [Validators.required, Validators.min(0.01)]],
       label: ['', [Validators.required, Validators.minLength(3)]],
       category: ['Food', Validators.required],
-      date: [new Date().toISOString().substring(0, 10), Validators.required]
+      date: [new Date().toISOString().substring(0, 10), Validators.required],
+      isRecurring: [false],
+      recurrenceInterval: [1, [Validators.min(1)]],
+      frequency: ['monthly'],
+      endDate: [null]
     });
 
     this.transactionForm.get('type')?.valueChanges.subscribe(type => {
@@ -45,6 +52,10 @@ export class AddTransactionComponent implements OnInit {
     this.transactionForm.patchValue({ type });
   }
 
+  goBack() {
+    this.router.navigate(['/dashboard']);
+  }
+
   async onSubmit() {
     if (this.transactionForm.valid) {
       this.isLoading = true;
@@ -52,7 +63,10 @@ export class AddTransactionComponent implements OnInit {
         const formValue = this.transactionForm.value;
         const newTransaction = {
           ...formValue,
-          isRecurring: false
+          isRecurring: formValue.isRecurring || false,
+          frequency: formValue.isRecurring ? formValue.frequency : 'none',
+          recurrenceInterval: formValue.isRecurring ? (formValue.recurrenceInterval || 1) : null,
+          endDate: formValue.isRecurring && formValue.endDate ? formValue.endDate : null
         };
         
         const { error } = await this.supabaseService.addTransaction(newTransaction);

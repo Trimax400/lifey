@@ -9,5 +9,6 @@ export interface Transaction {
   date: string | Date;
   isRecurring: boolean;
   frequency?: RecurrenceFrequency;
+  recurrenceInterval?: number;
   endDate?: string | Date;
 }

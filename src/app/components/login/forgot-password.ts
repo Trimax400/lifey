@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,12 +11,13 @@ import { SupabaseService } from '../../services/supabase';
   templateUrl: './forgot-password.html',
 })
 export class ForgotPasswordComponent {
+  private supabaseService = inject(SupabaseService);
+
   email: string = '';
   message: string = '';
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private supabaseService: SupabaseService) {}
 
   async resetPassword() {
     if (!this.email) {
