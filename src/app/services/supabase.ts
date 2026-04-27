@@ -64,15 +64,35 @@ export class SupabaseService {
     if (startDate && endDate) {
       query = query.or(`isRecurring.eq.true,and(date.gte.${startDate},date.lte.${endDate})`);
     }
-
-    console.log("Données renvoyées : ", await query.order('date', { ascending: false }));
-
     return await query.order('date', { ascending: false });
+  }
+
+  async getTransactionById(id: string | number) {
+    return await this.supabase
+      .from('transactions')
+      .select('*')
+      .eq('id', id)
+      .single();
   }
 
   async addTransaction(newTransaction: any) {
     return await this.supabase
       .from('transactions')
       .insert([newTransaction]);
+  }
+
+  async updateTransaction(id: string | number, updatedTransaction: any) {
+    return await this.supabase
+      .from('transactions')
+      .update(updatedTransaction)
+      .eq('id', id);
+  }
+
+  async deleteTransaction(id: string | number) {
+    console.log("On delete : ",id);
+    return await this.supabase
+      .from('transactions')
+      .delete()
+      .eq('id', id);
   }
 }

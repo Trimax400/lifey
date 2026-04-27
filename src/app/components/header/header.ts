@@ -13,7 +13,7 @@ export class HeaderComponent {
   private router = inject(Router);
 
   navLinks = [
-    { href: '/', label: 'home' },
+    { href: '/transactions', label: 'transactions' },
     { href: '/dashboard', label: 'dashboard' }
   ];
 

@@ -7,6 +7,8 @@ import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
 import { ForgotPasswordComponent } from './components/login/forgot-password';
 import { UpdatePasswordComponent } from './components/login/update-password';
+import { Transactions } from './components/transactions/transactions';
+import { EditTransaction } from './components/edit-transaction/edit-transaction';
 
 
 export const routes: Routes = [
@@ -17,5 +19,7 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent, pathMatch: 'full', canActivate: [guestGuard] },
     { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] },
     { path: 'add-transaction', component: AddTransactionComponent, canActivate: [authGuard] },
+    { path: 'edit-transaction/:id', component: EditTransaction, canActivate: [authGuard] },
+    { path: 'transactions', component: Transactions, canActivate: [authGuard] },
     { path: '**', redirectTo: '' }
 ];
