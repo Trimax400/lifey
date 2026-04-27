@@ -26,6 +26,10 @@ export class DashboardComponent implements OnInit {
   isLoading: boolean = true;
   projectedData: { month: string, amount: number, percentage: number, isPositive: boolean, transactions: Transaction[] }[] = [];
   selectedMonth: { month: string, transactions: Transaction[] } | null = null;
+  
+  viewMode: 'week' | 'month' | 'year' = 'month';
+  currentDate: Date = new Date();
+  periodLabel: string = '';
 
   async ngOnInit() {
     await this.loadTransactions();
@@ -34,26 +38,23 @@ export class DashboardComponent implements OnInit {
   async loadTransactions() {
     this.isLoading = true;
     try {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const lastDay = new Date(year, now.getMonth() + 1, 0).getDate();
+      const { start, end, label } = this.getPeriodDates();
+      this.periodLabel = label;
       
-      const startOfMonth = `${year}-${month}-01`;
-      const endOfMonthStr = `${year}-${month}-${lastDay}`;
+      const startStr = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`;
+      const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
 
-      const { data, error } = await this.supabaseService.getTransactions(startOfMonth, endOfMonthStr);
+      const { data, error } = await this.supabaseService.getTransactions(startStr, endStr);
       if (error) throw error;
       
       if (data) {
-        const endOfMonth = new Date(year, now.getMonth() + 1, 0, 23, 59, 59);
+        const expandedData = this.recurrenceService.expandTransactions(data as Transaction[], end);
         
-        const expandedData = this.recurrenceService.expandTransactions(data as Transaction[], endOfMonth);
-        
-        const currentMonthPrefix = `${year}-${month}`;
         const currentMonthData = expandedData.filter(t => {
           const dateStr = typeof t.date === 'string' ? t.date : t.date.toISOString();
-          return dateStr.startsWith(currentMonthPrefix);
+          const [y, m, d] = dateStr.substring(0, 10).split('-').map(Number);
+          const tDate = new Date(y, m - 1, d, 12, 0, 0);
+          return tDate >= start && tDate <= end;
         });
 
         this.calculateMetrics(currentMonthData);
@@ -152,6 +153,57 @@ export class DashboardComponent implements OnInit {
 
   closeMonthDetails() {
     this.selectedMonth = null;
+  }
+
+  getPeriodDates() {
+    const d = new Date(this.currentDate);
+    const y = d.getFullYear();
+    const m = d.getMonth();
+    let start: Date, end: Date, label: string;
+
+    if (this.viewMode === 'month') {
+      start = new Date(y, m, 1, 0, 0, 0);
+      end = new Date(y, m + 1, 0, 23, 59, 59);
+      label = start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    } else if (this.viewMode === 'year') {
+      start = new Date(y, 0, 1, 0, 0, 0);
+      end = new Date(y, 11, 31, 23, 59, 59);
+      label = y.toString();
+    } else {
+      const day = d.getDay() || 7;
+      start = new Date(y, m, d.getDate() - day + 1, 0, 0, 0);
+      end = new Date(start.getTime());
+      end.setDate(start.getDate() + 6);
+      end.setHours(23, 59, 59, 999);
+      
+      const formatOpts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+      if (start.getFullYear() !== end.getFullYear()) {
+         label = `${start.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+      } else {
+         label = `${start.toLocaleDateString('en-US', formatOpts)} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+      }
+    }
+    return { start, end, label };
+  }
+
+  previousPeriod() {
+    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+    else this.currentDate.setDate(this.currentDate.getDate() - 7);
+    this.loadTransactions();
+  }
+
+  nextPeriod() {
+    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+    else this.currentDate.setDate(this.currentDate.getDate() + 7);
+    this.loadTransactions();
+  }
+
+  setViewMode(mode: string) {
+    this.viewMode = mode as 'week' | 'month' | 'year';
+    this.currentDate = new Date();
+    this.loadTransactions();
   }
 
   onAddTransaction() {
