@@ -44,7 +44,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .attr('height', '100%')
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .append('g')
-      .attr('transform', `translate(${this.height / 2}, ${this.height / 2})`);
+      .attr('transform', `translate(${this.width * 0.35}, ${this.height / 2})`);
   }
 
   private createColors(): void {
@@ -101,7 +101,7 @@ export class PieChartComponent implements OnInit, OnChanges {
     const legendHeight = (this.data.length - 1) * legendItemSpacing + 20;
 
     const legendGroup = this.svg.append('g')
-      .attr('transform', `translate(${this.radius + 40}, ${-legendHeight / 2})`);
+      .attr('transform', `translate(${this.radius + 20}, ${-legendHeight / 2})`);
 
     const legend = legendGroup.selectAll('.legend')
       .data(this.data)
@@ -117,10 +117,11 @@ export class PieChartComponent implements OnInit, OnChanges {
       .attr('rx', 4)
       .attr('fill', (d: any) => this.colors(d.label));
 
+    const maxLabelLength = 8;
     legend.append('text')
       .attr('x', 30)
       .attr('y', 15)
-      .text((d: any) => d.label)
+      .text((d: any) => d.label.length > maxLabelLength ? d.label.substring(0, maxLabelLength) + '...' : d.label)
       .style('font-size', '16px')
       .style('font-family', 'sans-serif')
       .style('fill', '#333')
@@ -136,7 +137,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .style('display', (d: any, i: number) => i === this.data.length - 1 ? 'none' : 'block');
 
     legend.append('text')
-      .attr('x', 250)
+      .attr('x', 190)
       .attr('y', 15)
       .text((d: any) => `${d.value} (${Math.round((d.value / total) * 100)}%)`)
       .style('font-size', '16px')

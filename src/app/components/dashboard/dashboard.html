@@ -8,30 +8,37 @@
 
   <div class="flex items-center gap-2 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200">
     <div class="relative">
-    
-    <select 
-      (change)="setViewMode($any($event.target).value)" 
-      class="appearance-none bg-slate-50 border-none text-sm font-bold text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 py-2 pl-4 pr-10 outline-none cursor-pointer hover:bg-slate-100 transition-colors w-full">
-      <option value="week" [selected]="viewMode === 'week'">Week</option>
-      <option value="month" [selected]="viewMode === 'month'">Month</option>
-      <option value="year" [selected]="viewMode === 'year'">Year</option>
-    </select>
 
-    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-      </svg>
+      <select (change)="setViewMode($any($event.target).value)"
+        class="appearance-none bg-slate-50 border-none text-sm font-bold text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 py-2 pl-4 pr-10 outline-none cursor-pointer hover:bg-slate-100 transition-colors w-full">
+        <option value="week" [selected]="viewMode === 'week'">Week</option>
+        <option value="month" [selected]="viewMode === 'month'">Month</option>
+        <option value="year" [selected]="viewMode === 'year'">Year</option>
+      </select>
+
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+
     </div>
 
-  </div>
-    
     <div class="flex items-center gap-1 border-l border-slate-200 pl-2">
-      <button (click)="previousPeriod()" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-emerald-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+      <button (click)="previousPeriod()"
+        class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-emerald-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
       </button>
       <span class="text-sm font-bold text-slate-700 min-w-[130px] text-center">{{ periodLabel }}</span>
-      <button (click)="nextPeriod()" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-emerald-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+      <button (click)="nextPeriod()"
+        class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-emerald-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
     </div>
   </div>
@@ -44,7 +51,7 @@
 } @else {
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
   <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
-    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Income</span>
+    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Incomes</span>
     <p class="text-3xl font-bold mt-1 text-slate-800">+{{ income | number:'1.2-2' }} €</p>
   </div>
   <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
@@ -52,109 +59,159 @@
     <p class="text-3xl font-bold mt-1 text-slate-800">-{{ expenses | number:'1.2-2' }} €</p>
   </div>
   <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
-    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Balance</span>
+    <div class="flex justify-between items-center">
+      <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Balance</span>
+      <span class="text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md" title="Savings Rate">{{
+        savingsRate | number:'1.0-1' }}% saved</span>
+    </div>
     <p class="text-3xl font-bold mt-1 text-slate-800">{{ balance >= 0 ? '+' : '' }}{{ balance | number:'1.2-2' }} €</p>
   </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
-    <h3 class="text-lg font-bold text-slate-800 mb-4">Expenses Breakdown</h3>
-    <div class="flex justify-center items-center h-64 w-full">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+  <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200 lg:col-span-1">
+    <h3 class="text-lg font-bold text-slate-800 mb-2">Expenses Breakdown</h3>
+    <div class="flex justify-center items-center h-56 w-full">
       <app-pie-chart [data]="pieChartData" emptyMessage="No expenses yet." class="block w-full h-full"></app-pie-chart>
     </div>
   </div>
 
-  <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
-    <h3 class="text-lg font-bold text-slate-800 mb-4">Major Expenses</h3>
-    <ul class="space-y-4">
-      @for (expense of majorExpenses; track expense.id) {
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H7a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-            </div>
-            <div>
-              <p class="font-semibold text-slate-700">{{ expense.label }}</p>
-              <p class="text-sm text-slate-500">{{ expense.date | date:'longDate' }}</p>
-            </div>
+  <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200 lg:col-span-1">
+    <h3 class="text-lg font-bold text-slate-800 mb-2">Fixed vs Variable</h3>
+    <div class="flex justify-center items-center h-56 w-full">
+      <app-pie-chart [data]="fixedVarChartData" emptyMessage="No expenses yet."
+        class="block w-full h-full"></app-pie-chart>
+    </div>
+  </div>
+
+  <div
+    class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200 lg:col-span-1 lg:row-span-2 flex flex-col h-full">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-lg font-bold text-slate-800">{{ majorListView === 'expenses' ? 'Major Expenses' : 'Major Incomes'
+        }}</h3>
+      <div class="flex bg-slate-100 p-1 rounded-lg shrink-0">
+        <button (click)="majorListView = 'expenses'" [class.bg-white]="majorListView === 'expenses'"
+          [class.shadow-sm]="majorListView === 'expenses'" [class.text-slate-800]="majorListView === 'expenses'"
+          class="px-2 py-1 text-xs font-medium rounded-md transition-all text-slate-500 cursor-pointer">Expenses</button>
+        <button (click)="majorListView = 'income'" [class.bg-white]="majorListView === 'income'"
+          [class.shadow-sm]="majorListView === 'income'" [class.text-slate-800]="majorListView === 'income'"
+          class="px-2 py-1 text-xs font-medium rounded-md transition-all text-slate-500 cursor-pointer">Income</button>
+      </div>
+    </div>
+
+    <ul class="space-y-4 overflow-y-auto flex-1 pr-2 custom-scrollbar">
+      @for (tx of displayedMajorTransactions; track tx.id) {
+      <li class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H7a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
           </div>
-          <p class="font-bold text-red-500">-{{ expense.amount | number:'1.2-2' }} €</p>
-        </li>
+          <div class="min-w-0">
+            <p class="font-semibold text-slate-700 truncate">{{ tx.label }}</p>
+            <p class="text-xs text-slate-500">{{ tx.date | date:'mediumDate' }}</p>
+          </div>
+        </div>
+        <p class="font-bold text-sm shrink-0" [class.text-red-500]="tx.type === 'expense'"
+          [class.text-emerald-500]="tx.type === 'income'">
+          {{ tx.type === 'expense' ? '-' : '+' }}{{ tx.amount | number:'1.2-2' }} €
+        </p>
+      </li>
       } @empty {
-        <li class="flex items-center justify-center h-64 text-slate-500 font-medium">No expenses yet.</li>
+      <li class="flex items-center justify-center h-full text-slate-500 font-medium pb-8">No {{ majorListView }} yet.
+      </li>
       }
     </ul>
   </div>
+
+  <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200 lg:col-span-2 flex flex-col justify-center">
+    <app-line-chart [data]="historyData" [paths]="historyPaths" title="History (Last 6 months)"></app-line-chart>
+  </div>
+
 </div>
 
-<div class="mt-6 p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+<div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
   <h3 class="text-lg font-bold text-slate-800 mb-1">Projected Budget (Next 6 months)</h3>
-  <p class="text-sm text-slate-500 mb-6">Based on your recurring income and expenses.</p>
-  
-  <div class="relative flex justify-between items-stretch h-48 gap-2 sm:gap-4 mt-4 mb-6">
+  <p class="text-sm text-slate-500 mb-6">Based on your recurring incomes and expenses.</p>
+
+  <div class="relative flex justify-between items-stretch h-48 gap-2 sm:gap-4 mt-4 mb-2">
     <div class="absolute w-full h-px bg-slate-200 top-1/2 left-0 -translate-y-1/2 z-0"></div>
-    
+
     @for (item of projectedData; track item.month) {
-      <div class="flex-1 flex flex-col items-center justify-center relative h-full group cursor-pointer rounded-lg hover:bg-slate-50 transition-colors" (click)="openMonthDetails(item.month, item.transactions)">
-        <div class="opacity-0 group-hover:opacity-100 absolute z-20 -top-8 bg-slate-800 text-white text-xs px-2 py-1 rounded pointer-events-none transition-opacity whitespace-nowrap shadow-md">
-          {{ item.isPositive ? '+' : '' }}{{ item.amount | number:'1.0-0' }} €
-        </div>
-        
-        <div class="w-full max-w-[3rem] h-full flex flex-col z-10 cursor-pointer">
-          <div class="flex-1 flex items-end justify-center pb-px">
-            @if (item.isPositive) {
-              <div class="w-full bg-emerald-400 hover:bg-emerald-500 rounded-t-md transition-all duration-500" [style.height.%]="item.percentage"></div>
-            }
-          </div>
-          <div class="flex-1 flex items-start justify-center pt-px">
-            @if (!item.isPositive) {
-              <div class="w-full bg-red-400 hover:bg-red-500 rounded-b-md transition-all duration-500" [style.height.%]="item.percentage"></div>
-            }
-          </div>
-        </div>
-        
-        <span class="text-xs font-bold text-slate-500 absolute -bottom-6">{{ item.month }}</span>
+    <div
+      class="flex-1 flex flex-col items-center justify-center relative h-full group cursor-pointer rounded-xl hover:bg-slate-50 transition-colors"
+      (click)="openMonthDetails(item.month, item.transactions)">
+      <div
+        class="opacity-0 group-hover:opacity-100 absolute z-20 -top-10 bg-slate-800 text-white text-xs font-medium px-2.5 py-1.5 rounded-lg pointer-events-none transition-all whitespace-nowrap shadow-md translate-y-2 group-hover:translate-y-0">
+        {{ item.isPositive ? '+' : '' }}{{ item.amount | number:'1.0-0' }} €
       </div>
+
+      <div class="w-full max-w-[2.5rem] h-full flex flex-col z-10 cursor-pointer">
+        <div class="flex-1 flex items-end justify-center pb-1">
+          @if (item.isPositive) {
+          <div class="w-full bg-emerald-400 group-hover:bg-emerald-500 rounded-t-lg transition-all duration-300"
+            [style.height.%]="item.percentage"></div>
+          }
+        </div>
+        <div class="flex-1 flex items-start justify-center pt-1">
+          @if (!item.isPositive) {
+          <div class="w-full bg-red-400 group-hover:bg-red-500 rounded-b-lg transition-all duration-300"
+            [style.height.%]="item.percentage"></div>
+          }
+        </div>
+      </div>
+
+      <span class="text-xs font-bold text-slate-500 absolute -bottom-6">{{ item.month }}</span>
+    </div>
     }
   </div>
 </div>
+
 }
 
-<button 
-  (click)="onAddTransaction()"
-  class="fixed bottom-8 right-8 w-16 h-16 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-center transition-all duration-300 hover:-translate-y-2 active:scale-95 bg-opacity-100 cursor-pointer"
->
+<button (click)="onAddTransaction()"
+  class="fixed bottom-8 right-8 w-16 h-16 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-center transition-all duration-300 hover:-translate-y-2 active:scale-95 bg-opacity-100 cursor-pointer z-60">
   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
   </svg>
 </button>
 
 @if (selectedMonth) {
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity" (click)="closeMonthDetails()">
-  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col m-4" (click)="$event.stopPropagation()">
-    
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity"
+  (click)="closeMonthDetails()">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col m-4"
+    (click)="$event.stopPropagation()">
+
     <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
       <h3 class="text-lg font-bold text-slate-800">Projections for {{ selectedMonth.month }}</h3>
-      <button (click)="closeMonthDetails()" class="p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-full transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      <button (click)="closeMonthDetails()"
+        class="p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-full transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
     </div>
-    
+
     <div class="p-5 overflow-y-auto flex-1">
       <ul class="space-y-3">
         @for (tx of selectedMonth.transactions; track tx.id) {
-          <li class="flex justify-between items-center p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
-            <div>
-              <p class="font-semibold text-slate-700">{{ tx.label }}</p>
-              <p class="text-xs text-slate-400">{{ tx.date | date:'mediumDate' }}</p>
-            </div>
-            <p class="font-bold" [class.text-emerald-500]="tx.type === 'income'" [class.text-red-500]="tx.type === 'expense'">
-              {{ tx.type === 'income' ? '+' : '-' }}{{ tx.amount | number:'1.2-2' }} €
-            </p>
-          </li>
+        <li class="flex justify-between items-center p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+          <div>
+            <p class="font-semibold text-slate-700">{{ tx.label }}</p>
+            <p class="text-xs text-slate-400">{{ tx.date | date:'mediumDate' }}</p>
+          </div>
+          <p class="font-bold" [class.text-emerald-500]="tx.type === 'income'"
+            [class.text-red-500]="tx.type === 'expense'">
+            {{ tx.type === 'income' ? '+' : '-' }}{{ tx.amount | number:'1.2-2' }} €
+          </p>
+        </li>
         } @empty {
-          <p class="text-center text-slate-500 py-4">No transactions planned.</p>
+        <p class="text-center text-slate-500 py-4">No transactions planned.</p>
         }
       </ul>
     </div>
