@@ -12,10 +12,20 @@ export class SidebarComponent {
   private supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
-  navLinks = [
-    { href: '/dashboard', label: 'dashboard' },
-    { href: '/transactions', label: 'transactions' },
-    { href: '/profile', label: 'profile'}
+  navCategories = [
+    {
+      title: 'Main',
+      links: [
+        { href: '/dashboard', label: 'dashboard' },
+        { href: '/transactions', label: 'transactions' },
+      ]
+    },
+    {
+      title: 'Settings',
+      links: [
+        { href: '/profile', label: 'profile'}
+      ]
+    }
   ];
 
 
