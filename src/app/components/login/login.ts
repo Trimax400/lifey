@@ -62,7 +62,8 @@ export class LoginComponent implements OnInit {
           this.errorMessage = "Your email is not confirmed yet. Check your inbox.";
         }
       } else {
-        this.router.navigate(['/']);
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+        this.router.navigateByUrl(returnUrl);
       }
     } catch (err: any) {
       console.error('Error while log in:', err);
