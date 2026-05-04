@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { PieChartComponent } from '../pie-chart/pie-chart';
-import { LineChartComponent } from '../line-chart/line-chart';
+import { PieChartComponent } from '../charts/pie-chart/pie-chart';
+import { LineChartComponent } from '../charts/line-chart/line-chart';
 import { SupabaseService } from '../../services/supabase';
 import { Transaction } from '../../models/transaction.model';
 import { RecurrenceService } from '../../services/recurrence';

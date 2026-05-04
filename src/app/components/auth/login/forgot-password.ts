@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SupabaseService } from '../../services/supabase';
+import { SupabaseService } from '../../../services/supabase';
 
 @Component({
   selector: 'app-forgot-password',

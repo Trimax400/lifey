@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { SupabaseService } from '../../services/supabase';
+import { SupabaseService } from '../../../services/supabase';
 
 @Component({
   selector: 'app-update-password',

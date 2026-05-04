@@ -1,22 +1,27 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { SupabaseService } from '../../services/supabase';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SupabaseService } from '../../../services/supabase';
 
 @Component({
-  selector: 'app-add-transaction',
+  selector: 'app-edit-transaction',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-transaction.html'
+  templateUrl: './edit-transaction.html',
+  styleUrl: './edit-transaction.css',
 })
-export class AddTransactionComponent implements OnInit {
-  private fb = inject(FormBuilder)
-  private router = inject(Router)
-  private supabaseService = inject(SupabaseService)
+export class EditTransaction implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private supabaseService = inject(SupabaseService);
+  private cdr = inject(ChangeDetectorRef);
   
-  isLoading: boolean = false;
+  isLoading: boolean = true;
+  isSaving: boolean = false;
   transactionForm!: FormGroup;
+  transactionId!: string;
 
   expenseCategories = ['Food', 'Housing', 'Transport', 'Health', 'Entertainment', 'Subscriptions', 'Other'];
   incomeCategories = ['Salary', 'Bonus', 'Refund', 'Sales', 'Other'];
@@ -28,8 +33,9 @@ export class AddTransactionComponent implements OnInit {
       : this.expenseCategories;
   }
 
-
   ngOnInit(): void {
+    this.transactionId = this.route.snapshot.paramMap.get('id')!;
+    
     this.transactionForm = this.fb.group({
       type: ['expense', Validators.required],
       amount: [null, [Validators.required, Validators.min(0.01)]],
@@ -42,10 +48,33 @@ export class AddTransactionComponent implements OnInit {
       endDate: [null]
     });
 
+    this.loadTransaction();
+
     this.transactionForm.get('type')?.valueChanges.subscribe(type => {
       const defaultCategory = type === 'income' ? 'Salary' : 'Food';
       this.transactionForm.get('category')?.setValue(defaultCategory);
     });
+  }
+
+  async loadTransaction() {
+    try {
+      const { data, error } = await this.supabaseService.getTransactionById(this.transactionId);
+      if (error) throw error;
+      if (data) {
+        this.transactionForm.patchValue({
+          ...data,
+          date: typeof data.date === 'string' ? data.date.substring(0, 10) : new Date(data.date).toISOString().substring(0, 10),
+          endDate: data.endDate ? (typeof data.endDate === 'string' ? data.endDate.substring(0, 10) : new Date(data.endDate).toISOString().substring(0, 10)) : null,
+          recurrenceInterval: data.recurrenceInterval || 1
+        }, { emitEvent: false });
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement de la transaction:', error);
+      this.goBack();
+    } finally {
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }
   }
 
   setType(type: 'expense' | 'income') {
@@ -53,15 +82,15 @@ export class AddTransactionComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/transactions']);
   }
 
   async onSubmit() {
     if (this.transactionForm.valid) {
-      this.isLoading = true;
+      this.isSaving = true;
       try {
         const formValue = this.transactionForm.value;
-        const newTransaction = {
+        const updatedTransaction = {
           ...formValue,
           isRecurring: formValue.isRecurring || false,
           frequency: formValue.isRecurring ? formValue.frequency : 'none',
@@ -69,14 +98,15 @@ export class AddTransactionComponent implements OnInit {
           endDate: formValue.isRecurring && formValue.endDate ? formValue.endDate : null
         };
         
-        const { error } = await this.supabaseService.addTransaction(newTransaction);
+        const { error } = await this.supabaseService.updateTransaction(this.transactionId, updatedTransaction);
         if (error) throw error;
         
-        this.router.navigate(['/dashboard']);
+        this.goBack();
       } catch (error) {
-        console.error('Erreur lors de l\'ajout de la transaction:', error);
+        console.error('Erreur lors de la modification de la transaction:', error);
       } finally {
-        this.isLoading = false;
+        this.isSaving = false;
+        this.cdr.detectChanges();
       }
     }
   }

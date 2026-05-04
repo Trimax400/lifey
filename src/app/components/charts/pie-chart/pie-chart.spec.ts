@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddTransaction } from './add-transaction';
+import { PieChartComponent as PieChart } from './pie-chart';
 
-describe('AddTransaction', () => {
-  let component: AddTransaction;
-  let fixture: ComponentFixture<AddTransaction>;
+describe('PieChart', () => {
+  let component: PieChart;
+  let fixture: ComponentFixture<PieChart>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTransaction],
+      imports: [PieChart],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddTransaction);
+    fixture = TestBed.createComponent(PieChart);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

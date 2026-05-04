@@ -1,31 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
-import { SupabaseService } from '../../services/supabase';
+import { SupabaseService } from '../../../services/supabase';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-header',
   imports: [RouterModule],
-  templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
+  templateUrl: './header.html',
+  styleUrl: './header.css',
 })
-export class SidebarComponent {
+export class HeaderComponent {
   private supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
-  navCategories = [
-    {
-      title: 'Main',
-      links: [
-        { href: '/dashboard', label: 'dashboard' },
-        { href: '/transactions', label: 'transactions' },
-      ]
-    },
-    {
-      title: 'Settings',
-      links: [
-        { href: '/profile', label: 'profile'}
-      ]
-    }
+  navLinks = [
+    { href: '/transactions', label: 'transactions' },
+    { href: '/dashboard', label: 'dashboard' }
   ];
 
 
