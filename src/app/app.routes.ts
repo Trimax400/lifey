@@ -9,6 +9,7 @@ import { ForgotPasswordComponent } from './components/login/forgot-password';
 import { UpdatePasswordComponent } from './components/login/update-password';
 import { Transactions } from './components/transactions/transactions';
 import { EditTransaction } from './components/edit-transaction/edit-transaction';
+import { Profile } from './components/settings/profile/profile';
 
 
 export const routes: Routes = [
@@ -21,5 +22,6 @@ export const routes: Routes = [
     { path: 'add-transaction', component: AddTransactionComponent, canActivate: [authGuard] },
     { path: 'edit-transaction/:id', component: EditTransaction, canActivate: [authGuard] },
     { path: 'transactions', component: Transactions, canActivate: [authGuard] },
+    { path: 'profile', component: Profile, canActivate: [authGuard] },
     { path: '**', redirectTo: '' }
 ];

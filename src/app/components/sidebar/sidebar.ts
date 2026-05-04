@@ -14,7 +14,8 @@ export class SidebarComponent {
 
   navLinks = [
     { href: '/dashboard', label: 'dashboard' },
-    { href: '/transactions', label: 'transactions' }
+    { href: '/transactions', label: 'transactions' },
+    { href: '/profile', label: 'profile'}
   ];
 
 
