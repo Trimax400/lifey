@@ -25,12 +25,16 @@ jobs:
       run: |
         mkdir -p src/environments
         
+        SUPA_URL_CLEAN=$(echo "${{ secrets.SUPABASE_URL }}" | tr -d '\r\n ')
+        SUPA_KEY_CLEAN=$(echo "${{ secrets.SUPABASE_KEY }}" | tr -d '\r\n ')
+        SERVER_URL_CLEAN=$(echo "${{ secrets.SERVER_URL }}" | tr -d '\r\n ')
+        
         cat <<EOF > src/environments/environment.ts
         export const environment = {
           production: true,
-          supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-          supabaseKey: '${{ secrets.SUPABASE_KEY }}',
-          serverUrl: '${{ secrets.SERVER_URL }}
+          supabaseUrl: '${SUPA_URL_CLEAN}',
+          supabaseKey: '${SUPA_KEY_CLEAN}',
+          serverUrl: '${SERVER_URL_CLEAN}'
         };
         EOF
         
