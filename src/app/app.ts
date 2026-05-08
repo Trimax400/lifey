@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { SidebarComponent } from './components/sidebar/sidebar';
-import { FooterComponent } from './components/footer/footer';
+import { SidebarComponent } from './components/shared/sidebar/sidebar';
+import { FooterComponent } from './components/shared/footer/footer';
 
 @Component({
   selector: 'app-root',

@@ -1,4 +1,5 @@
 export const environment = {
   supabaseUrl: '',
-  supabaseKey: ''
+  supabaseKey: '',
+  serverUrl: ''
 };

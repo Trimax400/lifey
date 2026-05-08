@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { AddTransactionComponent } from './components/add-transaction/add-transaction';
+import { AddTransactionComponent } from './components/transaction/add-transaction/add-transaction';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { authGuard } from './auth/auth-guard';
 import { guestGuard } from './auth/guest-guard';
-import { LoginComponent } from './components/login/login';
-import { SignupComponent } from './components/signup/signup';
-import { ForgotPasswordComponent } from './components/login/forgot-password';
-import { UpdatePasswordComponent } from './components/login/update-password';
-import { Transactions } from './components/transactions/transactions';
-import { EditTransaction } from './components/edit-transaction/edit-transaction';
+import { LoginComponent } from './components/auth/login/login';
+import { SignupComponent } from './components/auth/signup/signup';
+import { ForgotPasswordComponent } from './components/auth/login/forgot-password';
+import { UpdatePasswordComponent } from './components/auth/login/update-password';
+import { Transactions } from './components/transaction/transactions/transactions';
+import { EditTransaction } from './components/transaction/edit-transaction/edit-transaction';
 import { Profile } from './components/settings/profile/profile';
 
 

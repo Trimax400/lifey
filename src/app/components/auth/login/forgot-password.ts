@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -31,7 +32,7 @@ export class ForgotPasswordComponent {
 
     try {
       const { error } = await this.supabaseService.resetPasswordForEmail(this.email, {
-        redirectTo: 'http://localhost:4200/update-password', 
+        redirectTo: `${environment.serverUrl}}/update-password`, 
       });
 
       if (error) {
