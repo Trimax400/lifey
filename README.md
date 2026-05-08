@@ -46,7 +46,6 @@ Lifey is a modern, fast, and secure personal finance application designed to giv
    Create an `environment.ts` file (and `environment.development.ts`) in `src/environments/` and add your Supabase credentials:
    ```typescript
    export const environment = {
-     production: false,
      supabaseUrl: 'YOUR_SUPABASE_URL',
      supabaseKey: 'YOUR_SUPABASE_ANON_KEY',
      serverUrl: 'http://localhost:4200'
