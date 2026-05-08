@@ -40,7 +40,7 @@ export class SupabaseService {
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: 'http://localhost:4200/login'
+        emailRedirectTo: `${environment.serverUrl}/login`
       }
     });
     return { data, error };
