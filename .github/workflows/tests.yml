@@ -2,7 +2,7 @@ name: Angular Tests (Vitest)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ mvp ]
   workflow_dispatch:
 
 jobs:
