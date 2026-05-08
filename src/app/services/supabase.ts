@@ -88,7 +88,6 @@ export class SupabaseService {
   }
 
   async deleteTransaction(id: string | number) {
-    console.log("On delete : ",id);
     return await this.supabase
       .from('transactions')
       .delete()

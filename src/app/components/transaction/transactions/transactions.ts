@@ -132,9 +132,7 @@ export class Transactions implements OnInit {
   }
 
   async deleteTransaction(id: string) {
-    console.log("id :", id);
     const realId = id.split('-recur-')[0];
-    console.log("DeleteTransaction : ", realId);
     if (confirm('Are you sure you want to delete this transaction? (If this is a recurring transaction, it will be deleted completely)')) {
       const { error } = await this.supabaseService.deleteTransaction(realId);
       if (!error) {

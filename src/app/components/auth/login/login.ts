@@ -66,7 +66,6 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl(returnUrl);
       }
     } catch (err: any) {
-      console.error('Error while log in:', err);
       this.errorMessage.set(err?.error?.error_description || err?.error?.message || err?.message || 'Server error. Please retry later.');
     } finally {
       this.isLoading.set(false);

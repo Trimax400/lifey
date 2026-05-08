@@ -7,7 +7,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { guestGuard } from './guest-guard';
 import { SupabaseService } from '../services/supabase';
 
-@Component({ template: '<h1>Login Page</h1>', standalone: true })
+@Component({selector: 'test-login', template: '<h1>Login Page</h1>', standalone: true })
 class LoginComponent {}
 
 @Component({ template: '<h1>Dashboard Page</h1>', standalone: true })

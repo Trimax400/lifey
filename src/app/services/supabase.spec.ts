@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, beforeAll, vi } from 'vitest';
 import { SupabaseService } from './supabase';
 
 describe('SupabaseService', () => {
@@ -16,13 +16,15 @@ describe('SupabaseService', () => {
     delete: vi.fn().mockReturnThis(),
   };
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-
+  beforeAll(() => {
     TestBed.configureTestingModule({
       providers: [SupabaseService]
     });
     service = TestBed.inject(SupabaseService);
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
 
     service.supabase = {
       auth: {
