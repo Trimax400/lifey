@@ -1,0 +1,14 @@
+services:
+  lifey-app:
+    build: .
+    container_name: angular-finance-app
+    ports:
+      - "8081:80"
+    restart: always
+    networks:
+      - web-gateway
+
+
+networks:
+  web-gateway:
+    external: true

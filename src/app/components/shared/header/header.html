@@ -1,0 +1,35 @@
+<header class="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-md border-b">
+    <nav class="mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+
+        <div class="flex items-center gap-2">
+            <a [routerLink]="['/']" class="font-bold text-xl tracking-tighter font-mono italic">
+                Li<span class="text-emerald-600">fey</span>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6 md:gap-10">
+            <!-- Desktop Navigation Menu -->
+            <ul class="hidden md:flex gap-8">
+                @for (link of navLinks(); track link.href) {
+                <li>
+                    <a [routerLink]="link.href"
+                        class="text-xs font-mono uppercase tracking-widest hover:text-primary transition-colors duration-200">
+                        {{ link.label }}
+                    </a>
+                </li>
+                }
+            </ul>
+
+            <!-- Decorative vertical divider -->
+            <div class="h-5 w-[1px] hidden md:block"></div>
+
+            <div class="hidden md:flex items-center gap-4">
+                <button (click)="logout()" class="text-xs font-mono uppercase tracking-widest bg-emerald-600 text-white px-5 py-2 rounded-lg shadow-sm hover:bg-emerald-500 hover:shadow transition-all duration-200 active:scale-95 cursor-pointer">
+                    Disconnect
+                </button>
+            </div>
+
+
+        </div>
+    </nav>
+</header>

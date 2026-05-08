@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get the code
+      uses: actions/checkout@v4
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Generate environment files
+      run: |
+        mkdir -p src/environments
+        
+        SUPA_URL_CLEAN=$(echo "${{ secrets.SUPABASE_URL }}" | tr -d '\r\n ')
+        SUPA_KEY_CLEAN=$(echo "${{ secrets.SUPABASE_KEY }}" | tr -d '\r\n ')
+        SERVER_URL_CLEAN=$(echo "${{ secrets.SERVER_URL }}" | tr -d '\r\n ')
+        
+        cat <<EOF > src/environments/environment.ts
+        export const environment = {
+          production: true,
+          supabaseUrl: '${SUPA_URL_CLEAN}',
+          supabaseKey: '${SUPA_KEY_CLEAN}',
+          serverUrl: '${SERVER_URL_CLEAN}'
+        };
+        EOF
+        
+        cp src/environments/environment.ts src/environments/environment.development.ts
+
+    - name: Build
+      run: npm run build -- --configuration production
+
+    - name: Copy files to VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        source: ".,!.git"
+        target: "/var/www/lifey/"
+
+    - name: Restart docker
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          cd /var/www/lifey/
+          
+          docker compose up -d --build
+          
+          docker image prune -f
