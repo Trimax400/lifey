@@ -21,6 +21,21 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Generate environment files
+      run: |
+        mkdir -p src/environments
+        
+        cat <<EOF > src/environments/environment.ts
+        export const environment = {
+          production: true,
+          supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+          supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+          serverUrl: '${{ secrets.SERVER_URL }}
+        };
+        EOF
+        
+        cp src/environments/environment.ts src/environments/environment.development.ts
+
     - name: Build
       run: npm run build -- --configuration production
 
