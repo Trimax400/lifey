@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
@@ -18,18 +18,18 @@ export class SignupComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  errorMessage: string = '';
-  successMessage: string = '';
-  isLoading: boolean = false;
+  errorMessage: WritableSignal<string> = signal('');
+  successMessage: WritableSignal<string> = signal('');
+  isLoading: WritableSignal<boolean> = signal(false);
 
   async onSubmit() {
     if (this.signupForm.invalid) {
       return;
     }
 
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    this.successMessage.set('');
 
     const { email, password } = this.signupForm.value;
 
@@ -37,15 +37,15 @@ export class SignupComponent {
       const { data, error } = await this.supabaseService.signUp(email, password);
 
       if (error) {
-        this.errorMessage = error.message;
+        this.errorMessage.set(error.message);
       } else {
-        this.successMessage = 'Successfully registered ! Check your email box to confirm your email.';
+        this.successMessage.set('Successfully registered ! Check your email box to confirm your email.')
         this.signupForm.reset();
       }
     } catch (err: any) {
-      this.errorMessage = 'Une erreur inattendue est survenue.';
+      this.errorMessage.set('Une erreur inattendue est survenue.');
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 }

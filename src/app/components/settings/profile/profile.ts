@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../services/supabase';
@@ -6,20 +6,19 @@ import { SupabaseService } from '../../../services/supabase';
 @Component({
   selector: 'app-profile',
   imports: [CommonModule, FormsModule],
-  templateUrl: './profile.html',
-  styleUrl: './profile.css',
+  templateUrl: './profile.html'
 })
 export class Profile implements OnInit {
-  userEmail: string = '';
-  createdAt: string = '';
+  userEmail = signal<string>('');
+  createdAt = signal<string>('');
 
-  newPassword: string = '';
-  confirmPassword: string = '';
+  newPassword = signal<string>('');
+  confirmPassword = signal<string>('');
 
-  isLoading: boolean = true;
-  isUpdating: boolean = false;
-  successMessage: string = '';
-  errorMessage: string = '';
+  isLoading = signal<boolean>(true);
+  isUpdating = signal<boolean>(false);
+  successMessage = signal<string>('');
+  errorMessage = signal<string>('');
 
   constructor(
     private supabaseService: SupabaseService,
@@ -32,43 +31,46 @@ export class Profile implements OnInit {
       if (error) throw error;
 
       if (user) {
-        this.userEmail = user.email || '';
-        this.createdAt = user.created_at;
+        this.userEmail.set(user.email || '');
+        this.createdAt.set(user.created_at);
       }
     } catch (error: any) {
-      this.errorMessage = error.message;
+      this.errorMessage.set(error.message);
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
       this.cdr.detectChanges();
     }
   }
 
   async onUpdatePassword() {
-    this.successMessage = '';
-    this.errorMessage = '';
+    this.successMessage.set('');
+    this.errorMessage.set('');
+    
+    const newPass = this.newPassword();
+    const confirmPass = this.confirmPassword();
 
-    if (!this.newPassword || this.newPassword.length < 6) {
-      this.errorMessage = 'The password must be at least 6 characters long.';
+    if (!newPass || newPass.length < 6) {
+      this.errorMessage.set('The password must be at least 6 characters long.');
       return;
     }
 
-    if (this.newPassword !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match.';
+    if (newPass !== confirmPass) {
+      this.errorMessage.set('Passwords do not match.');
       return;
     }
 
-    this.isUpdating = true;
+    this.isUpdating.set(true);
     try {
-      const { error } = await this.supabaseService.updatePassword(this.newPassword);
+      const { error } = await this.supabaseService.updatePassword(newPass);
       if (error) throw error;
 
-      this.successMessage = 'Your password has been updated successfully.';
-      this.newPassword = '';
-      this.confirmPassword = '';
+      this.successMessage.set('Your password has been updated successfully.');
+      this.newPassword.set('');
+      this.confirmPassword.set('');
     } catch (error: any) {
-      this.errorMessage = 'An error occurred: ' + error.message;
+      this.errorMessage.set('An error occurred: ' + error.message);
     } finally {
-      this.isUpdating = false;
+      this.isUpdating.set(false);
       this.cdr.detectChanges();
     }
   }

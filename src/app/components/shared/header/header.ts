@@ -1,21 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
 
 @Component({
   selector: 'app-header',
   imports: [RouterModule],
-  templateUrl: './header.html',
-  styleUrl: './header.css',
+  templateUrl: './header.html'
 })
 export class HeaderComponent {
   private supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
-  navLinks = [
+  navLinks = signal([
     { href: '/transactions', label: 'transactions' },
     { href: '/dashboard', label: 'dashboard' }
-  ];
+  ]);
 
 
   async logout() {

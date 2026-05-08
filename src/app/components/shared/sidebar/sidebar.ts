@@ -1,18 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
 
 @Component({
   selector: 'app-sidebar',
   imports: [RouterModule],
-  templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
+  templateUrl: './sidebar.html'
 })
 export class SidebarComponent {
   private supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
-  navCategories = [
+  navCategories = signal([
     {
       title: 'Main',
       links: [
@@ -26,7 +25,7 @@ export class SidebarComponent {
         { href: '/profile', label: 'profile'}
       ]
     }
-  ];
+  ]);
 
 
   async logout() {

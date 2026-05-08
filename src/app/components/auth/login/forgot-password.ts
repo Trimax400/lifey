@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -14,36 +14,36 @@ import { environment } from '../../../../environments/environment';
 export class ForgotPasswordComponent {
   private supabaseService = inject(SupabaseService);
 
-  email: string = '';
-  message: string = '';
-  errorMessage: string = '';
-  isLoading: boolean = false;
+  email = signal('');
+  message = signal('');
+  errorMessage = signal('');
+  isLoading = signal(false);
 
 
   async resetPassword() {
-    if (!this.email) {
-      this.errorMessage = 'Put your email address.';
+    if (!this.email()) {
+      this.errorMessage.set('Put your email address.');
       return;
     }
 
-    this.isLoading = true;
-    this.message = '';
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.message.set('');
+    this.errorMessage.set('');
 
     try {
-      const { error } = await this.supabaseService.resetPasswordForEmail(this.email, {
-        redirectTo: `${environment.serverUrl}}/update-password`, 
+      const { error } = await this.supabaseService.resetPasswordForEmail(this.email(), {
+        redirectTo: `${environment.serverUrl}/update-password`,
       });
 
       if (error) {
-        this.errorMessage = error.message;
+        this.errorMessage.set(error.message);
       } else {
-        this.message = 'A password reset link has been sent to your email address.';
+        this.message.set('A password reset link has been sent to your email address.');
       }
     } catch (err: any) {
-      this.errorMessage = err.message || 'An unknown error occurred.';
+      this.errorMessage.set(err.message || 'An unknown error occurred.');
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 }

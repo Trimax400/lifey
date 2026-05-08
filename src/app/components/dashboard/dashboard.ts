@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject, signal, computed, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PieChartComponent } from '../charts/pie-chart/pie-chart';
@@ -19,38 +19,38 @@ export class DashboardComponent implements OnInit {
   private supabaseService = inject(SupabaseService);
   private recurrenceService = inject(RecurrenceService);
 
-  income: number = 0;
-  expenses: number = 0;
-  balance: number = 0;
-  savingsRate: number = 0;
-  majorExpenses: Transaction[] = [];
-  majorIncomes: Transaction[] = [];
-  pieChartData: { label: string, value: number }[] = [];
-  fixedVarChartData: { label: string, value: number }[] = [];
-  historyData: { label: string, income: number, expenses: number, balance: number }[] = [];
-  historyPaths = { income: '', expenses: '', balance: '' };
-  isLoading: boolean = true;
-  projectedData: { month: string, amount: number, percentage: number, isPositive: boolean, transactions: Transaction[] }[] = [];
-  selectedMonth: { month: string, transactions: Transaction[] } | null = null;
+  income = signal<number>(0);
+  expenses = signal<number>(0);
+  balance = signal<number>(0);
+  savingsRate = signal<number>(0);
+  majorExpenses = signal<Transaction[]>([]);
+  majorIncomes = signal<Transaction[]>([]);
+  pieChartData = signal<{ label: string, value: number }[]>([]);
+  fixedVarChartData = signal<{ label: string, value: number }[]>([]);
+  historyData = signal<{ label: string, income: number, expenses: number, balance: number }[]>([]);
+  historyPaths = signal({ income: '', expenses: '', balance: '' });
+  isLoading = signal<boolean>(true);
+  projectedData = signal<{ month: string, amount: number, percentage: number, isPositive: boolean, transactions: Transaction[] }[]>([]);
+  selectedMonth = signal<{ month: string, transactions: Transaction[] } | null>(null);
   
-  majorListView: 'expenses' | 'income' = 'expenses';
-  viewMode: 'week' | 'month' | 'year' = 'month';
-  currentDate: Date = new Date();
-  periodLabel: string = '';
+  majorListView = signal<'expenses' | 'income'>('expenses');
+  viewMode = signal<'week' | 'month' | 'year'>('month');
+  currentDate = signal<Date>(new Date());
+  periodLabel = signal<string>('');
+
+  displayedMajorTransactions = computed(() => {
+    return this.majorListView() === 'expenses' ? this.majorExpenses() : this.majorIncomes();
+  });
 
   async ngOnInit() {
     await this.loadTransactions();
   }
 
-  get displayedMajorTransactions(): Transaction[] {
-    return this.majorListView === 'expenses' ? this.majorExpenses : this.majorIncomes;
-  }
-
   async loadTransactions() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     try {
       const { start, end, label } = this.getPeriodDates();
-      this.periodLabel = label;
+      this.periodLabel.set(label);
       
       const startStr = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`;
       const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
@@ -83,14 +83,14 @@ export class DashboardComponent implements OnInit {
     } catch (error) {
       console.error('Erreur lors de la récupération des transactions:', error);
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
       this.cdr.detectChanges();
     }
   }
 
   calculateMetrics(transactions: Transaction[]) {
-    this.income = 0;
-    this.expenses = 0;
+    let tempIncome = 0;
+    let tempExpenses = 0;
     const expenseList: Transaction[] = [];
     const incomeList: Transaction[] = [];
     const categoryMap = new Map<string, number>();
@@ -101,10 +101,10 @@ export class DashboardComponent implements OnInit {
       const amountAsNumber = Number(t.amount); 
 
       if (t.type === 'income') {
-        this.income += amountAsNumber;
+        tempIncome += amountAsNumber;
         incomeList.push({ ...t, amount: amountAsNumber });
       } else {
-        this.expenses += amountAsNumber;
+        tempExpenses += amountAsNumber;
         expenseList.push({ ...t, amount: amountAsNumber });
         
         const categoryName = t.category || 'Other';
@@ -119,28 +119,31 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.balance = this.income - this.expenses;
+    const currentBalance = tempIncome - tempExpenses;
+    this.income.set(tempIncome);
+    this.expenses.set(tempExpenses);
+    this.balance.set(currentBalance);
     
-    if (this.income > 0) {
-      const savings = Math.max(0, this.balance);
-      this.savingsRate = (savings / this.income) * 100;
+    if (tempIncome > 0) {
+      const savings = Math.max(0, currentBalance);
+      this.savingsRate.set((savings / tempIncome) * 100);
     } else {
-      this.savingsRate = 0;
+      this.savingsRate.set(0);
     }
 
-    this.majorExpenses = expenseList
+    this.majorExpenses.set(expenseList
       .sort((a, b) => b.amount - a.amount)
-      .slice(0, 10);
+      .slice(0, 10));
 
-    this.majorIncomes = incomeList
+    this.majorIncomes.set(incomeList
       .sort((a, b) => b.amount - a.amount)
-      .slice(0, 10);
+      .slice(0, 10));
 
-    this.pieChartData = Array.from(categoryMap.entries()).map(([label, value]) => ({ label, value }));
-    this.fixedVarChartData = [
+    this.pieChartData.set(Array.from(categoryMap.entries()).map(([label, value]) => ({ label, value })));
+    this.fixedVarChartData.set([
       { label: 'Fixed', value: fixedExpenses },
       { label: 'Variable', value: variableExpenses }
-    ].filter(item => item.value > 0);
+    ].filter(item => item.value > 0));
   }
 
   calculateProjections(transactions: Transaction[]) {
@@ -178,7 +181,7 @@ export class DashboardComponent implements OnInit {
     const maxAbs = Math.max(...Array.from(monthlyNet.values()).map(val => Math.abs(val)));
     const maxProjectedAmount = maxAbs > 0 ? maxAbs : 1;
 
-    this.projectedData = projectionMonths.map(key => {
+    this.projectedData.set(projectionMonths.map(key => {
       const [y, m] = key.split('-');
       const monthLabel = monthNames[parseInt(m, 10) - 1];
       const amount = monthlyNet.get(key) || 0;
@@ -189,7 +192,7 @@ export class DashboardComponent implements OnInit {
         isPositive: amount >= 0,
         transactions: monthlyTxs.get(key) || []
       };
-    });
+    }));
   }
 
   calculateHistory(transactions: Transaction[], endDate: Date) {
@@ -217,23 +220,24 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.historyData = historyKeys.map(key => {
+    this.historyData.set(historyKeys.map(key => {
       const item = historyMap.get(key)!;
       item.balance = item.income - item.expenses;
       return item;
-    });
+    }));
     
     this.generateHistoryPaths();
   }
 
   generateHistoryPaths() {
-    if (this.historyData.length < 2) {
-      this.historyPaths = { income: '', expenses: '', balance: '' };
+    const hData = this.historyData();
+    if (hData.length < 2) {
+      this.historyPaths.set({ income: '', expenses: '', balance: '' });
       return;
     }
     
-    const maxVal = Math.max(...this.historyData.flatMap(d => [d.income, d.expenses, d.balance]), 100);
-    const minVal = Math.min(...this.historyData.flatMap(d => [d.income, d.expenses, d.balance]), 0);
+    const maxVal = Math.max(...hData.flatMap(d => [d.income, d.expenses, d.balance]), 100);
+    const minVal = Math.min(...hData.flatMap(d => [d.income, d.expenses, d.balance]), 0);
     
     const range = (maxVal - minVal) || 1;
     const paddedMin = minVal - (range * 0.1);
@@ -241,7 +245,7 @@ export class DashboardComponent implements OnInit {
 
     const height = 120;
     const width = 600;
-    const xStep = width / (this.historyData.length - 1);
+    const xStep = width / (hData.length - 1);
 
     const getPoint = (val: number, i: number): [number, number] => {
         const y = height - ((val - paddedMin) / paddedRange) * height;
@@ -258,11 +262,11 @@ export class DashboardComponent implements OnInit {
       return points.reduce((acc, point, i, a) => i === 0 ? `M ${point[0]},${point[1]}` : `${acc} ${command(point, i, a)}`, '');
     };
 
-    this.historyPaths = {
-      income: line(this.historyData.map((d, i) => getPoint(d.income, i))),
-      expenses: line(this.historyData.map((d, i) => getPoint(d.expenses, i))),
-      balance: line(this.historyData.map((d, i) => getPoint(d.balance, i))),
-    };
+    this.historyPaths.set({
+      income: line(hData.map((d, i) => getPoint(d.income, i))),
+      expenses: line(hData.map((d, i) => getPoint(d.expenses, i))),
+      balance: line(hData.map((d, i) => getPoint(d.balance, i))),
+    });
   }
 
   private controlPoint(current: [number, number], previous: [number, number], next: [number, number], reverse?: boolean): [number, number] {
@@ -278,24 +282,25 @@ export class DashboardComponent implements OnInit {
   }
 
   openMonthDetails(month: string, transactions: Transaction[]) {
-    this.selectedMonth = { month, transactions };
+    this.selectedMonth.set({ month, transactions });
   }
 
   closeMonthDetails() {
-    this.selectedMonth = null;
+    this.selectedMonth.set(null);
   }
 
   getPeriodDates() {
-    const d = new Date(this.currentDate);
+    const d = new Date(this.currentDate());
+    const mode = this.viewMode();
     const y = d.getFullYear();
     const m = d.getMonth();
     let start: Date, end: Date, label: string;
 
-    if (this.viewMode === 'month') {
+    if (mode === 'month') {
       start = new Date(y, m, 1, 0, 0, 0);
       end = new Date(y, m + 1, 0, 23, 59, 59);
       label = start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    } else if (this.viewMode === 'year') {
+    } else if (mode === 'year') {
       start = new Date(y, 0, 1, 0, 0, 0);
       end = new Date(y, 11, 31, 23, 59, 59);
       label = y.toString();
@@ -317,22 +322,28 @@ export class DashboardComponent implements OnInit {
   }
 
   previousPeriod() {
-    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
-    else this.currentDate.setDate(this.currentDate.getDate() - 7);
+    const current = new Date(this.currentDate());
+    const mode = this.viewMode();
+    if (mode === 'month') current.setMonth(current.getMonth() - 1);
+    else if (mode === 'year') current.setFullYear(current.getFullYear() - 1);
+    else current.setDate(current.getDate() - 7);
+    this.currentDate.set(current);
     this.loadTransactions();
   }
 
   nextPeriod() {
-    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
-    else this.currentDate.setDate(this.currentDate.getDate() + 7);
+    const current = new Date(this.currentDate());
+    const mode = this.viewMode();
+    if (mode === 'month') current.setMonth(current.getMonth() + 1);
+    else if (mode === 'year') current.setFullYear(current.getFullYear() + 1);
+    else current.setDate(current.getDate() + 7);
+    this.currentDate.set(current);
     this.loadTransactions();
   }
 
   setViewMode(mode: string) {
-    this.viewMode = mode as 'week' | 'month' | 'year';
-    this.currentDate = new Date();
+    this.viewMode.set(mode as 'week' | 'month' | 'year');
+    this.currentDate.set(new Date());
     this.loadTransactions();
   }
 

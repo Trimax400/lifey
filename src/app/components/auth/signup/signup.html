@@ -25,21 +25,21 @@
         </div>
       </div>
 
-      @if (errorMessage) {
+      @if (errorMessage()) {
       <div class="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-md">
-        {{ errorMessage }}
+        {{ errorMessage() }}
       </div>
       }
-      @if (successMessage) {
+      @if (successMessage()) {
       <div class="text-emerald-600 text-sm text-center font-medium bg-emerald-50 p-2 rounded-md">
-        {{ successMessage }}
+        {{ successMessage() }}
       </div>
       }
 
       <div>
-        <button type="submit" [disabled]="signupForm.invalid || isLoading"
+        <button type="submit" [disabled]="signupForm.invalid || isLoading()"
           class="w-full bg-emerald-600 text-white font-mono uppercase tracking-widest text-xs px-5 py-3 rounded-lg shadow-sm hover:bg-emerald-500 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
-          {{ isLoading ? 'Creating an account...' : 'Sign up' }}
+          {{ isLoading() ? 'Creating an account...' : 'Sign up' }}
         </button>
       </div>
 

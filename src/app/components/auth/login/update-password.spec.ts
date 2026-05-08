@@ -1,121 +1,164 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter, Router, ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
-
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UpdatePasswordComponent } from './update-password';
 import { SupabaseService } from '../../../services/supabase';
 
 describe('UpdatePasswordComponent', () => {
   let component: UpdatePasswordComponent;
   let fixture: ComponentFixture<UpdatePasswordComponent>;
-  let mockUpdatePassword: any;
   let mockRouter: any;
 
+  const mockUpdatePassword = vi.fn();
+  const mockSupabaseService = {
+    updatePassword: mockUpdatePassword
+  };
+
   beforeEach(async () => {
-    mockUpdatePassword = vi.fn();
-    mockRouter = { navigate: vi.fn() };
+    vi.clearAllMocks();
+
+    mockRouter = {
+      navigate: vi.fn()
+    };
 
     await TestBed.configureTestingModule({
-      imports: [UpdatePasswordComponent, ReactiveFormsModule],
+      imports: [UpdatePasswordComponent],
       providers: [
-        {
-          provide: SupabaseService,
-          useValue: { updatePassword: mockUpdatePassword }
-        },
-        {
-          provide: Router,
-          useValue: mockRouter
-        }
+        provideRouter([]),
+        { provide: SupabaseService, useValue: mockSupabaseService },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: {} }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UpdatePasswordComponent);
     component = fixture.componentInstance;
+    
     fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have an invalid form if passwords do not match', () => {
-    component.updatePasswordForm.controls['password'].setValue('newpass123');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('differentpass');
+  describe('Form Validation', () => {
     
-    expect(component.updatePasswordForm.invalid).toBe(true);
-    expect(component.updatePasswordForm.hasError('mismatch')).toBe(true);
+    it('should be invalid if password is less than 6 characters', () => {
+      component.updatePasswordForm.controls['password'].setValue('12345');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('12345');
+      
+      expect(component.updatePasswordForm.invalid).toBe(true);
+      expect(component.updatePasswordForm.get('password')?.hasError('minlength')).toBe(true);
+    });
+
+    it('should be invalid if passwords do not match', () => {
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('different');
+      
+      expect(component.updatePasswordForm.invalid).toBe(true);
+      expect(component.updatePasswordForm.hasError('mismatch')).toBe(true);
+    });
+
+    it('should be valid if passwords match and are at least 6 characters', () => {
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('password123');
+      
+      expect(component.updatePasswordForm.valid).toBe(true);
+      expect(component.updatePasswordForm.hasError('mismatch')).toBe(false);
+    });
   });
 
-  it('should have a valid form if passwords match and are long enough', () => {
-    component.updatePasswordForm.controls['password'].setValue('validpass');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('validpass');
+  describe('Update Password Logic', () => {
     
-    expect(component.updatePasswordForm.valid).toBe(true);
-    expect(component.updatePasswordForm.hasError('mismatch')).toBe(false);
+    it('should not call Supabase if the form is invalid', async () => {
+      component.updatePasswordForm.controls['password'].setValue('pass');
+      
+      await component.updatePassword();
+      
+      expect(mockUpdatePassword).not.toHaveBeenCalled();
+    });
+
+    it('should call Supabase, show success message, and navigate after 3s on success', async () => {
+      vi.useFakeTimers();
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('password123');
+      mockUpdatePassword.mockResolvedValue({ error: null });
+
+      const promise = component.updatePassword();
+      
+      expect(component.isLoading()).toBe(true);
+
+      await promise; 
+
+      expect(mockUpdatePassword).toHaveBeenCalledWith('password123');
+      expect(component.message()).toBe('Your password has been successfully updated.');
+      expect(component.errorMessage()).toBe('');
+      expect(component.isLoading()).toBe(false);
+
+      vi.advanceTimersByTime(3000);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+      
+      vi.useRealTimers();
+    });
+
+    it('should display an error if Supabase returns an error', async () => {
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('password123');
+      const mockError = { message: 'Token expired' };
+      mockUpdatePassword.mockResolvedValue({ error: mockError });
+
+      await component.updatePassword();
+
+      expect(component.errorMessage()).toBe('Token expired');
+      expect(component.message()).toBe('');
+      expect(component.isLoading()).toBe(false);
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should catch and display exceptions', async () => {
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('password123');
+      mockUpdatePassword.mockRejectedValue(new Error('Network error'));
+
+      await component.updatePassword();
+
+      expect(component.errorMessage()).toBe('Network error');
+      expect(component.isLoading()).toBe(false);
+    });
   });
 
-  it('should have an invalid form if password is less than 6 characters', () => {
-    component.updatePasswordForm.controls['password'].setValue('12345');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('12345');
+  describe('HTML Template Rendering', () => {
     
-    expect(component.updatePasswordForm.invalid).toBe(true);
-    expect(component.updatePasswordForm.controls['password'].hasError('minlength')).toBe(true);
-  });
+    it('should disable the submit button and change text during loading', async () => {
+      component.updatePasswordForm.controls['password'].setValue('password123');
+      component.updatePasswordForm.controls['confirmPassword'].setValue('password123');
+      component.isLoading.set(true);
+      
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      
+      const buttonEl = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+      expect(buttonEl.disabled).toBe(true);
+      expect(buttonEl.textContent.trim()).toBe('Updating...');
+    });
 
-  it('should not call update service if form is invalid', async () => {
-    component.updatePasswordForm.controls['password'].setValue('short');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('short');
-    
-    await component.updatePassword();
-    
-    expect(mockUpdatePassword).not.toHaveBeenCalled();
-  });
+    it('should display the error message in the DOM', () => {
+      component.errorMessage.set('Passwords do not match');
+      fixture.detectChanges();
 
-  it('should call updatePassword and navigate to login on success', fakeAsync(() => {
-    mockUpdatePassword.mockResolvedValue({ error: null });
-    
-    component.updatePasswordForm.controls['password'].setValue('securepass');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('securepass');
-    
-    component.updatePassword();
-    
-    expect(component.isLoading).toBe(true);
-    tick(); 
-    
-    expect(mockUpdatePassword).toHaveBeenCalledWith('securepass');
-    expect(component.message).toBe('Your password has been successfully updated.');
-    expect(component.isLoading).toBe(false);
-    
-    expect(mockRouter.navigate).not.toHaveBeenCalled();
-    tick(3000); 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
-  }));
+      const errorDiv = fixture.debugElement.query(By.css('.bg-red-50 span')).nativeElement;
+      expect(errorDiv.textContent.trim()).toBe('Passwords do not match');
+    });
 
-  it('should display error message on update failure', fakeAsync(() => {
-    mockUpdatePassword.mockResolvedValue({ error: { message: 'Weak password' } });
-    
-    component.updatePasswordForm.controls['password'].setValue('weakpass');
-    component.updatePasswordForm.controls['confirmPassword'].setValue('weakpass');
-    
-    component.updatePassword();
-    tick();
-    
-    expect(component.errorMessage).toBe('Weak password');
-    expect(component.message).toBe('');
-    expect(component.isLoading).toBe(false);
-  }));
+    it('should display the success message in the DOM', () => {
+      component.message.set('Password successfully updated');
+      fixture.detectChanges();
 
-  it('should display mismatch error in the template when passwords differ', () => {
-    component.updatePasswordForm.controls['password'].setValue('pass123');
-    const confirmInput = component.updatePasswordForm.controls['confirmPassword'];
-    confirmInput.setValue('pass456');
-    confirmInput.markAsTouched(); 
-    
-    fixture.detectChanges();
-    
-    const errorDiv = fixture.debugElement.query(By.css('.text-red-500.text-xs'));
-    expect(errorDiv.nativeElement.textContent).toContain('Passwords do not match.');
+      const successDiv = fixture.debugElement.query(By.css('.bg-emerald-50')).nativeElement;
+      expect(successDiv.textContent.trim()).toBe('Password successfully updated');
+    });
   });
 });

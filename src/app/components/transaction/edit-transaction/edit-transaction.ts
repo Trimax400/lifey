@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,8 +8,7 @@ import { SupabaseService } from '../../../services/supabase';
   selector: 'app-edit-transaction',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './edit-transaction.html',
-  styleUrl: './edit-transaction.css',
+  templateUrl: './edit-transaction.html'
 })
 export class EditTransaction implements OnInit {
   private fb = inject(FormBuilder);
@@ -18,8 +17,8 @@ export class EditTransaction implements OnInit {
   private supabaseService = inject(SupabaseService);
   private cdr = inject(ChangeDetectorRef);
   
-  isLoading: boolean = true;
-  isSaving: boolean = false;
+  isLoading = signal<boolean>(true);
+  isSaving = signal<boolean>(false);
   transactionForm!: FormGroup;
   transactionId!: string;
 
@@ -72,7 +71,7 @@ export class EditTransaction implements OnInit {
       console.error('Erreur lors du chargement de la transaction:', error);
       this.goBack();
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
       this.cdr.detectChanges();
     }
   }
@@ -87,7 +86,7 @@ export class EditTransaction implements OnInit {
 
   async onSubmit() {
     if (this.transactionForm.valid) {
-      this.isSaving = true;
+      this.isSaving.set(true);
       try {
         const formValue = this.transactionForm.value;
         const updatedTransaction = {
@@ -105,7 +104,7 @@ export class EditTransaction implements OnInit {
       } catch (error) {
         console.error('Erreur lors de la modification de la transaction:', error);
       } finally {
-        this.isSaving = false;
+        this.isSaving.set(false);
         this.cdr.detectChanges();
       }
     }

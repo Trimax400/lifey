@@ -10,7 +10,7 @@
         <div class="flex items-center gap-6 md:gap-10">
             <!-- Desktop Navigation Menu -->
             <ul class="hidden md:flex gap-8">
-                @for (link of navLinks; track link.href) {
+                @for (link of navLinks(); track link.href) {
                 <li>
                     <a [routerLink]="link.href"
                         class="text-xs font-mono uppercase tracking-widest hover:text-primary transition-colors duration-200">

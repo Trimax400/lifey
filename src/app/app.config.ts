@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideZonelessChangeDetection } from "@angular/core";
 
 import { routes } from './app.routes';
 //import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
       const supabaseService = inject(SupabaseService);
       return supabaseService.supabase.auth.getSession();
     }),
+    provideZonelessChangeDetection()
   ]
 };

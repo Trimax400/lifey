@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
@@ -9,8 +9,7 @@ import { RecurrenceService } from '../../../services/recurrence';
   selector: 'app-transactions',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './transactions.html',
-  styleUrl: './transactions.css'
+  templateUrl: './transactions.html'
 })
 export class Transactions implements OnInit {
   private supabaseService = inject(SupabaseService);
@@ -18,23 +17,23 @@ export class Transactions implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
 
-  transactions: Transaction[] = [];
-  isLoading: boolean = true;
+  transactions = signal<Transaction[]>([]);
+  isLoading = signal<boolean>(true);
   
-  viewMode: 'week' | 'month' | 'year' = 'month';
-  currentDate: Date = new Date();
-  periodLabel: string = '';
-  filterType: 'all' | 'recurring' | 'one-time' = 'all';
+  viewMode = signal<'week' | 'month' | 'year'>('month');
+  currentDate = signal<Date>(new Date());
+  periodLabel = signal<string>('');
+  filterType = signal<'all' | 'recurring' | 'one-time'>('all');
 
   async ngOnInit() {
     await this.loadTransactions();
   }
 
   async loadTransactions() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     try {
       const { start, end, label } = this.getPeriodDates();
-      this.periodLabel = label;
+      this.periodLabel.set(label);
       
       const startStr = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`;
       const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
@@ -52,33 +51,35 @@ export class Transactions implements OnInit {
           return tDate >= start && tDate <= end;
         });
 
-        if (this.filterType === 'recurring') {
+        const filter = this.filterType();
+        if (filter === 'recurring') {
           filteredData = filteredData.filter(t => t.isRecurring);
-        } else if (this.filterType === 'one-time') {
+        } else if (filter === 'one-time') {
           filteredData = filteredData.filter(t => !t.isRecurring);
         }
 
-        this.transactions = filteredData;
+        this.transactions.set(filteredData);
       }
     } catch (error) {
       console.error('Erreur lors de la récupération des transactions:', error);
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
       this.cdr.detectChanges();
     }
   }
 
   getPeriodDates() {
-    const d = new Date(this.currentDate);
+    const d = new Date(this.currentDate());
+    const mode = this.viewMode();
     const y = d.getFullYear();
     const m = d.getMonth();
     let start: Date, end: Date, label: string;
 
-    if (this.viewMode === 'month') {
+    if (mode === 'month') {
       start = new Date(y, m, 1, 0, 0, 0);
       end = new Date(y, m + 1, 0, 23, 59, 59);
       label = start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    } else if (this.viewMode === 'year') {
+    } else if (mode === 'year') {
       start = new Date(y, 0, 1, 0, 0, 0);
       end = new Date(y, 11, 31, 23, 59, 59);
       label = y.toString();
@@ -100,27 +101,33 @@ export class Transactions implements OnInit {
   }
 
   previousPeriod() {
-    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
-    else this.currentDate.setDate(this.currentDate.getDate() - 7);
+    const current = new Date(this.currentDate());
+    const mode = this.viewMode();
+    if (mode === 'month') current.setMonth(current.getMonth() - 1);
+    else if (mode === 'year') current.setFullYear(current.getFullYear() - 1);
+    else current.setDate(current.getDate() - 7);
+    this.currentDate.set(current);
     this.loadTransactions();
   }
 
   nextPeriod() {
-    if (this.viewMode === 'month') this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-    else if (this.viewMode === 'year') this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
-    else this.currentDate.setDate(this.currentDate.getDate() + 7);
+    const current = new Date(this.currentDate());
+    const mode = this.viewMode();
+    if (mode === 'month') current.setMonth(current.getMonth() + 1);
+    else if (mode === 'year') current.setFullYear(current.getFullYear() + 1);
+    else current.setDate(current.getDate() + 7);
+    this.currentDate.set(current);
     this.loadTransactions();
   }
 
   setViewMode(mode: string) {
-    this.viewMode = mode as 'week' | 'month' | 'year';
-    this.currentDate = new Date();
+    this.viewMode.set(mode as 'week' | 'month' | 'year');
+    this.currentDate.set(new Date());
     this.loadTransactions();
   }
   
   setFilterType(type: string) {
-    this.filterType = type as 'all' | 'recurring' | 'one-time';
+    this.filterType.set(type as 'all' | 'recurring' | 'one-time');
     this.loadTransactions();
   }
 

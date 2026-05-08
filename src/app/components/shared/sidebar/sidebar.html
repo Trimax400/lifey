@@ -7,7 +7,7 @@
   </div>
 
   <nav class="flex-1 overflow-y-auto px-4 py-4">
-    @for (category of navCategories; track category.title; let first = $first) {
+    @for (category of navCategories(); track category.title; let first = $first) {
       @if (!first) {
         <hr class="border-t-2 border-slate-200 my-6">
       }

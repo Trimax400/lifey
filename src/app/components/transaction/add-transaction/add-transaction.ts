@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ export class AddTransactionComponent implements OnInit {
   private router = inject(Router)
   private supabaseService = inject(SupabaseService)
   
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
   transactionForm!: FormGroup;
 
   expenseCategories = ['Food', 'Housing', 'Transport', 'Health', 'Entertainment', 'Subscriptions', 'Other'];
@@ -58,7 +58,7 @@ export class AddTransactionComponent implements OnInit {
 
   async onSubmit() {
     if (this.transactionForm.valid) {
-      this.isLoading = true;
+      this.isLoading.set(true);
       try {
         const formValue = this.transactionForm.value;
         const newTransaction = {
@@ -76,7 +76,7 @@ export class AddTransactionComponent implements OnInit {
       } catch (error) {
         console.error('Erreur lors de l\'ajout de la transaction:', error);
       } finally {
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     }
   }

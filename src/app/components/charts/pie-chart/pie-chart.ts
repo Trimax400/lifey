@@ -3,8 +3,7 @@ import * as d3 from 'd3';
 
 @Component({
   selector: 'app-pie-chart',
-  templateUrl: './pie-chart.html',
-  styleUrls: ['./pie-chart.css']
+  templateUrl: './pie-chart.html'
 })
 export class PieChartComponent implements OnInit, OnChanges {
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;

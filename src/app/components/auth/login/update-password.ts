@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -18,12 +18,12 @@ export class UpdatePasswordComponent {
   updatePasswordForm: FormGroup = this.fb.group({
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]]
-  }, { validators: this.passwordMatchValidator });
+  }, { validators: this.passwordMatchValidator() });
 
 
-  message: string = '';
-  errorMessage: string = '';
-  isLoading: boolean = false;
+  message: WritableSignal<string> = signal('');
+  errorMessage: WritableSignal<string> = signal('');
+  isLoading: WritableSignal<boolean> = signal(false);
 
 
   passwordMatchValidator(): ValidatorFn {
@@ -40,9 +40,9 @@ export class UpdatePasswordComponent {
       return;
     }
 
-    this.isLoading = true;
-    this.message = '';
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.message.set('');
+    this.errorMessage.set('');
 
     const newPassword = this.updatePasswordForm.get('password')?.value;
 
@@ -50,17 +50,17 @@ export class UpdatePasswordComponent {
       const { error } = await this.supabaseService.updatePassword(newPassword);
 
       if (error) {
-        this.errorMessage = error.message;
+        this.errorMessage.set(error.message);
       } else {
-        this.message = 'Your password has been successfully updated.';
+        this.message.set('Your password has been successfully updated.');
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000);
       }
     } catch (err: any) {
-      this.errorMessage = err.message || 'An unknown error occurred.';
+      this.errorMessage.set(err.message || 'An unknown error occurred.');
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 }

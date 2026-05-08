@@ -4,7 +4,7 @@
         <p class="text-slate-500 text-sm font-medium">Update your transaction details.</p>
     </header>
 
-    @if (isLoading) {
+    @if (isLoading()) {
     <div class="flex justify-center items-center py-12">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
     </div>
@@ -105,9 +105,9 @@
             }
         </div>
 
-        <button type="submit" [disabled]="transactionForm.invalid || isSaving"
+        <button type="submit" [disabled]="transactionForm.invalid || isSaving()"
             class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 text-white font-bold rounded-2xl shadow-lg shadow-emerald-100 transition-all transform active:scale-95">
-            {{ isSaving ? 'Updating...' : 'Update Transaction' }}
+            {{ isSaving() ? 'Updating...' : 'Update Transaction' }}
         </button>
 
         <div class="text-center mt-6">

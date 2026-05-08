@@ -11,12 +11,11 @@ import { FooterComponent } from './components/shared/footer/footer';
       SidebarComponent,
       FooterComponent],
   standalone: true,
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.html'
 })
 export class App {
 
-  isMobileMenuOpen = false;
+  isMobileMenuOpen = signal<boolean>(false);
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -42,15 +41,15 @@ export class App {
 
     if (Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY)) {
       if (swipeDistanceX > 50 && this.touchStartX < 100) {
-        this.isMobileMenuOpen = true;
+        this.isMobileMenuOpen.set(true);
       }
-      else if (swipeDistanceX < -50 && this.isMobileMenuOpen) {
-        this.isMobileMenuOpen = false;
+      else if (swipeDistanceX < -50 && this.isMobileMenuOpen()) {
+        this.isMobileMenuOpen.set(false);
       }
     }
   }
 
   closeMobileMenu() {
-    this.isMobileMenuOpen = false;
+    this.isMobileMenuOpen.set(false);
   }
 }

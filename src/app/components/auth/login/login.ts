@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, inject, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
@@ -22,19 +22,19 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-  errorMessage: string = '';
-  isLoading: boolean = false;
+  errorMessage: WritableSignal<string> = signal('');
+  successMessage: WritableSignal<string> = signal('');
+  isLoading: WritableSignal<boolean> = signal(false);
   
-  isEmailNotConfirmed: boolean = false;
-  resendMessage: string = '';
-  isResending: boolean = false;
+  isEmailNotConfirmed: WritableSignal<boolean> = signal(false);
+  resendMessage: WritableSignal<string> = signal('');
+  isResending: WritableSignal<boolean> = signal(false);
   
-  successMessage: string = '';
 
   ngOnInit() {
     this.route.fragment.subscribe((fragment) => {
       if (fragment && fragment.includes('type=signup')) {
-        this.successMessage = "Email confirmed. You can now log in.";
+        this.successMessage.set("Email confirmed. You can now log in.");
       }
     });
   }
@@ -44,10 +44,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.resendMessage = '';
-    this.isEmailNotConfirmed = false;
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    this.resendMessage.set('');
+    this.isEmailNotConfirmed.set(false);
 
     const { email, password } = this.loginForm.value;
 
@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
       const result: any = await this.supabaseService.signIn(email, password);
 
       if (result && result.error) {
-        this.errorMessage = result.error.message || 'Wrong email address or password. Please try again.';
+        this.errorMessage.set(result.error.message || 'Wrong email address or password. Please try again.');
         
         if (result.error.message.includes('Email not confirmed') || result.error.code === 'email_not_confirmed') {
-          this.isEmailNotConfirmed = true;
-          this.errorMessage = "Your email is not confirmed yet. Check your inbox.";
+          this.isEmailNotConfirmed.set(true);
+          this.errorMessage.set("Your email is not confirmed yet. Check your inbox.");
         }
       } else {
         const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
@@ -67,16 +67,16 @@ export class LoginComponent implements OnInit {
       }
     } catch (err: any) {
       console.error('Error while log in:', err);
-      this.errorMessage = err?.error?.error_description || err?.error?.message || err?.message || 'Server error. Please retry later.';
+      this.errorMessage.set(err?.error?.error_description || err?.error?.message || err?.message || 'Server error. Please retry later.');
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
       this.cdr.detectChanges();
     }
   }
 
   async onResendConfirmation() {
-    this.isResending = true;
-    this.errorMessage = '';
+    this.isResending.set(true);
+    this.errorMessage.set('');
     
     const email = this.loginForm.get('email')?.value;
 
@@ -84,15 +84,15 @@ export class LoginComponent implements OnInit {
       const { data, error } = await this.supabaseService.resendConfirmation(email);
 
       if (error) {
-        this.errorMessage = "Error while sending mail : " + error.message;
+        this.errorMessage.set("Error while sending mail : " + error.message);
       } else {
-        this.isEmailNotConfirmed = false;
-        this.resendMessage = "Confirmation email sent ! Check your inbox.";
+        this.isEmailNotConfirmed.set(false);
+        this.resendMessage.set("Confirmation email sent ! Check your inbox.");
       }
     } catch (err) {
-      this.errorMessage = "An error occured while resending.";
+      this.errorMessage.set("An error occured while resending.");
     } finally {
-      this.isResending = false;
+      this.isResending.set(false);
       this.cdr.detectChanges();
     }
   }
