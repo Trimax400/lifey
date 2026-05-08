@@ -65,3 +65,10 @@ Lifey is thoroughly tested using Vitest. To run the test suite:
 ```bash
 ng test
 ```
+## ⏩ Roadmap
+_This roadmap is indicative and evolves based on technical feasibility and user feedback._
+
+- UI/UX Enhancements: Implementation of Dark Mode and French localization.
+- Banking Open API: Automated transaction syncing via secure bank integration.
+- Onboarding: In-app tutorials and interactive user documentation.
+- Social & Collaborative: Shared budgets and group expense tracking for trips or shared living.
