@@ -4,7 +4,7 @@
       <h2 class="mt-6 text-center text-3xl font-black text-slate-800 tracking-tight">
         Li<span class="text-emerald-600">fey</span>
       </h2>
-      <p class="mt-2 text-center text-sm text-slate-500 font-medium">
+      <p class="mt-2 text-center text-sm text-slate-500 font-medium" i18n="@@signup.subtitle">
         Create an account to get started
       </p>
     </div>
@@ -12,16 +12,16 @@
     <form class="mt-8 space-y-6" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="rounded-md shadow-sm flex flex-col gap-4">
         <div>
-          <label for="email-address" class="text-sm font-semibold text-slate-700">Email adress</label>
+          <label for="email-address" class="text-sm font-semibold text-slate-700" i18n="@@signup.emailLabel">Email address</label>
           <input id="email-address" type="email" autocomplete="email" required formControlName="email"
             class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
-            placeholder="example@email.com">
+            i18n-placeholder="@@signup.emailPlaceholder" placeholder="example@email.com">
         </div>
         <div>
-          <label for="password" class="text-sm font-semibold text-slate-700">Password</label>
+          <label for="password" class="text-sm font-semibold text-slate-700" i18n="@@signup.passwordLabel">Password</label>
           <input id="password" type="password" autocomplete="new-password" required formControlName="password"
             class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
-            placeholder="Your password (min. 6 characters)">
+            i18n-placeholder="@@signup.passwordPlaceholder" placeholder="Your password (min. 6 characters)">
         </div>
       </div>
 
@@ -39,13 +39,17 @@
       <div>
         <button type="submit" [disabled]="signupForm.invalid || isLoading()"
           class="w-full bg-emerald-600 text-white font-mono uppercase tracking-widest text-xs px-5 py-3 rounded-lg shadow-sm hover:bg-emerald-500 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
-          {{ isLoading() ? 'Creating an account...' : 'Sign up' }}
+          @if (isLoading()) {
+          <span i18n="@@signup.btnCreating">Creating an account...</span>
+          } @else {
+          <span i18n="@@signup.btnSubmit">Sign up</span>
+          }
         </button>
       </div>
 
       <div class="text-center mt-4">
         <a routerLink="/login"
-          class="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors">Already registered ?
+          class="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors" i18n="@@signup.alreadyRegistered">Already registered ?
           SignIn</a>
       </div>
     </form>

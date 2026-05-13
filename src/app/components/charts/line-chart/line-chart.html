@@ -1,9 +1,9 @@
 <div class="flex justify-between items-center mb-4">
   <h3 class="text-lg font-bold text-slate-800">{{ title }}</h3>
   <div class="flex gap-4 text-xs font-medium">
-    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Incomes</div>
-    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500"></span> Expenses</div>
-    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500"></span> Balance</div>
+    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <ng-container i18n="@@lineChart.incomes">Incomes</ng-container></div>
+    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500"></span> <ng-container i18n="@@lineChart.expenses">Expenses</ng-container></div>
+    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500"></span> <ng-container i18n="@@lineChart.balance">Balance</ng-container></div>
   </div>
 </div>
 
@@ -24,6 +24,6 @@
       }
     </div>
   } @else {
-    <div class="flex items-center justify-center h-full text-slate-500 font-medium">Not enough data for history chart.</div>
+    <div class="flex items-center justify-center h-full text-slate-500 font-medium" i18n="@@lineChart.noData">Not enough data for history chart.</div>
   }
 </div>

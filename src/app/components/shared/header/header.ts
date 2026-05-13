@@ -12,8 +12,8 @@ export class HeaderComponent {
   private router = inject(Router);
 
   navLinks = signal([
-    { href: '/transactions', label: 'transactions' },
-    { href: '/dashboard', label: 'dashboard' }
+    { href: '/transactions', label: $localize`:@@nav.transactions:transactions` },
+    { href: '/dashboard', label: $localize`:@@nav.dashboard:dashboard` }
   ]);
 
 
@@ -25,7 +25,7 @@ export class HeaderComponent {
         this.router.navigate(['/login']);
       }
     } catch (error) {
-      console.error('Erreur inattendue lors de la déconnexion:', error);
+      console.error($localize`:@@header.error.logout:Unexpected error during logout:`, error);
     }
   }
 }

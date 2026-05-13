@@ -1,14 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, inject, signal, LOCALE_ID } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
 import { Transaction } from '../../../models/transaction.model';
 import { RecurrenceService } from '../../../services/recurrence';
+import { CategoryLabelPipe } from '../../../pipes/category-label.pipe';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CategoryLabelPipe],
   templateUrl: './transactions.html'
 })
 export class Transactions implements OnInit {
@@ -16,6 +17,7 @@ export class Transactions implements OnInit {
   private recurrenceService = inject(RecurrenceService);
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
+  private locale = inject(LOCALE_ID);
 
   transactions = signal<Transaction[]>([]);
   isLoading = signal<boolean>(true);
@@ -61,7 +63,7 @@ export class Transactions implements OnInit {
         this.transactions.set(filteredData);
       }
     } catch (error) {
-      console.error('Erreur lors de la récupération des transactions:', error);
+      console.error($localize`:@@transactions.error.fetching:Error while fetching transactions:`, error);
     } finally {
       this.isLoading.set(false);
       this.cdr.detectChanges();
@@ -78,7 +80,7 @@ export class Transactions implements OnInit {
     if (mode === 'month') {
       start = new Date(y, m, 1, 0, 0, 0);
       end = new Date(y, m + 1, 0, 23, 59, 59);
-      label = start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      label = formatDate(start, 'LLLL y', this.locale);
     } else if (mode === 'year') {
       start = new Date(y, 0, 1, 0, 0, 0);
       end = new Date(y, 11, 31, 23, 59, 59);
@@ -90,11 +92,10 @@ export class Transactions implements OnInit {
       end.setDate(start.getDate() + 6);
       end.setHours(23, 59, 59, 999);
       
-      const formatOpts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
       if (start.getFullYear() !== end.getFullYear()) {
-         label = `${start.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+         label = `${formatDate(start, 'MMM d, y', this.locale)} - ${formatDate(end, 'MMM d, y', this.locale)}`;
       } else {
-         label = `${start.toLocaleDateString('en-US', formatOpts)} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+         label = `${formatDate(start, 'MMM d', this.locale)} - ${formatDate(end, 'MMM d, y', this.locale)}`;
       }
     }
     return { start, end, label };
@@ -133,13 +134,13 @@ export class Transactions implements OnInit {
 
   async deleteTransaction(id: string) {
     const realId = id.split('-recur-')[0];
-    if (confirm('Are you sure you want to delete this transaction? (If this is a recurring transaction, it will be deleted completely)')) {
+    if (confirm($localize`:@@transactions.confirmDelete:Are you sure you want to delete this transaction? (If this is a recurring transaction, it will be deleted completely)`)) {
       const { error } = await this.supabaseService.deleteTransaction(realId);
       if (!error) {
         this.loadTransactions();
       }
       else {
-        console.log(error);
+        console.error($localize`:@@transactions.error.deleting:Error while deleting transaction:`, error);
       }
     }
   }

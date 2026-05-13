@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef, inject, signal, computed, WritableSignal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, inject, signal, computed, WritableSignal, LOCALE_ID } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { PieChartComponent } from '../charts/pie-chart/pie-chart';
 import { LineChartComponent } from '../charts/line-chart/line-chart';
 import { SupabaseService } from '../../services/supabase';
 import { Transaction } from '../../models/transaction.model';
 import { RecurrenceService } from '../../services/recurrence';
+import { getCategoryLabel } from '../../utils/category.utils';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   private router = inject(Router);
   private supabaseService = inject(SupabaseService);
   private recurrenceService = inject(RecurrenceService);
+  private locale = inject(LOCALE_ID);
 
   income = signal<number>(0);
   expenses = signal<number>(0);
@@ -81,7 +83,7 @@ export class DashboardComponent implements OnInit {
         this.calculateHistory(historyRes.data as Transaction[], end);
       }
     } catch (error) {
-      console.error('Erreur lors de la récupération des transactions:', error);
+      console.error($localize`:@@dashboard.error.fetching:Error while fetching transactions:`, error);
     } finally {
       this.isLoading.set(false);
       this.cdr.detectChanges();
@@ -107,9 +109,10 @@ export class DashboardComponent implements OnInit {
         tempExpenses += amountAsNumber;
         expenseList.push({ ...t, amount: amountAsNumber });
         
-        const categoryName = t.category || 'Other';
-        const currentCategoryAmount = categoryMap.get(categoryName) || 0;
-        categoryMap.set(categoryName, currentCategoryAmount + amountAsNumber);
+        const categoryId = t.category || 'other';
+        const categoryLabel = getCategoryLabel(categoryId);
+        const currentCategoryAmount = categoryMap.get(categoryLabel) || 0;
+        categoryMap.set(categoryLabel, currentCategoryAmount + amountAsNumber);
 
         if (t.isRecurring) {
           fixedExpenses += amountAsNumber;
@@ -141,8 +144,8 @@ export class DashboardComponent implements OnInit {
 
     this.pieChartData.set(Array.from(categoryMap.entries()).map(([label, value]) => ({ label, value })));
     this.fixedVarChartData.set([
-      { label: 'Fixed', value: fixedExpenses },
-      { label: 'Variable', value: variableExpenses }
+      { label: $localize`:@@dashboard.category.fixed:Fixed`, value: fixedExpenses },
+      { label: $localize`:@@dashboard.category.variable:Variable`, value: variableExpenses }
     ].filter(item => item.value > 0));
   }
 
@@ -155,7 +158,6 @@ export class DashboardComponent implements OnInit {
     
     const monthlyNet = new Map<string, number>();
     const monthlyTxs = new Map<string, Transaction[]>();
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const projectionMonths: string[] = [];
     
     for (let i = 1; i <= 6; i++) {
@@ -183,7 +185,8 @@ export class DashboardComponent implements OnInit {
 
     this.projectedData.set(projectionMonths.map(key => {
       const [y, m] = key.split('-');
-      const monthLabel = monthNames[parseInt(m, 10) - 1];
+      const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+      const monthLabel = formatDate(d, 'MMM', this.locale);
       const amount = monthlyNet.get(key) || 0;
       return {
         month: monthLabel,
@@ -196,14 +199,13 @@ export class DashboardComponent implements OnInit {
   }
 
   calculateHistory(transactions: Transaction[], endDate: Date) {
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const historyMap = new Map<string, { label: string, income: number, expenses: number, balance: number }>();
     const historyKeys: string[] = [];
     
     for (let i = 5; i >= 0; i--) {
       const d = new Date(endDate.getFullYear(), endDate.getMonth() - i, 1);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-      historyMap.set(key, { label: monthNames[d.getMonth()], income: 0, expenses: 0, balance: 0 });
+      historyMap.set(key, { label: formatDate(d, 'MMM', this.locale), income: 0, expenses: 0, balance: 0 });
       historyKeys.push(key);
     }
 
@@ -299,7 +301,7 @@ export class DashboardComponent implements OnInit {
     if (mode === 'month') {
       start = new Date(y, m, 1, 0, 0, 0);
       end = new Date(y, m + 1, 0, 23, 59, 59);
-      label = start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      label = formatDate(start, 'LLLL y', this.locale);
     } else if (mode === 'year') {
       start = new Date(y, 0, 1, 0, 0, 0);
       end = new Date(y, 11, 31, 23, 59, 59);
@@ -311,11 +313,10 @@ export class DashboardComponent implements OnInit {
       end.setDate(start.getDate() + 6);
       end.setHours(23, 59, 59, 999);
       
-      const formatOpts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
       if (start.getFullYear() !== end.getFullYear()) {
-         label = `${start.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+         label = `${formatDate(start, 'MMM d, y', this.locale)} - ${formatDate(end, 'MMM d, y', this.locale)}`;
       } else {
-         label = `${start.toLocaleDateString('en-US', formatOpts)} - ${end.toLocaleDateString('en-US', { ...formatOpts, year: 'numeric' })}`;
+         label = `${formatDate(start, 'MMM d', this.locale)} - ${formatDate(end, 'MMM d, y', this.locale)}`;
       }
     }
     return { start, end, label };

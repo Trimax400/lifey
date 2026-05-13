@@ -40,9 +40,6 @@ jobs:
         
         cp src/environments/environment.ts src/environments/environment.development.ts
 
-    - name: Build
-      run: npm run build -- --configuration production
-
     - name: Copy files to VPS
       uses: appleboy/scp-action@v0.1.7
       with:

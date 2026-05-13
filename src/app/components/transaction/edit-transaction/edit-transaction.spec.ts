@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { EditTransaction } from './edit-transaction';
 import { SupabaseService } from '../../../services/supabase';
@@ -29,7 +30,7 @@ describe('EditTransaction', () => {
         type: 'expense',
         amount: 100,
         label: 'Test Dinner',
-        category: 'Food',
+        category: 'food',
         date: '2024-05-10T20:00:00.000Z',
         isRecurring: false
       },
@@ -39,6 +40,7 @@ describe('EditTransaction', () => {
     await TestBed.configureTestingModule({
       imports: [EditTransaction],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([]),
         { provide: SupabaseService, useValue: mockSupabaseService },
         {
@@ -74,7 +76,7 @@ describe('EditTransaction', () => {
         type: 'expense',
         amount: 100,
         label: 'Test Dinner',
-        category: 'Food',
+        category: 'food',
         date: '2024-05-10',
         isRecurring: false
       }));
@@ -87,7 +89,7 @@ describe('EditTransaction', () => {
       fixture.detectChanges();
       await vi.runAllTimersAsync();
 
-      expect(consoleSpy).toHaveBeenCalledWith('Erreur lors du chargement de la transaction:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith('Error while loading the transaction:', expect.any(Error));
       expect(router.navigate).toHaveBeenCalledWith(['/transactions']);
       expect(component.isLoading()).toBe(false);
     });

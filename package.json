@@ -30,6 +30,7 @@
     "@angular/build": "^21.2.10",
     "@angular/cli": "^21.2.10",
     "@angular/compiler-cli": "^21.2.12",
+    "@angular/localize": "^21.2.12",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/d3": "^7.4.3",
     "@types/express": "^5.0.1",

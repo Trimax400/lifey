@@ -1,6 +1,6 @@
 <section class="mb-8 text-center md:text-left">
-  <h1 class="text-4xl font-black text-slate-800 tracking-tight">My Profile</h1>
-  <p class="mt-2 text-slate-500 font-medium">Manage your account information and security.</p>
+    <h1 class="text-4xl font-black text-slate-800 tracking-tight" i18n="@@profile.title">My Profile</h1>
+    <p class="mt-2 text-slate-500 font-medium" i18n="@@profile.subtitle">Manage your account information and security.</p>
 </section>
 
 @if (isLoading()) {
@@ -11,20 +11,20 @@
 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-6 w-full flex flex-col">
   
   <div class="p-6 md:p-8">
-    <h3 class="text-xl font-bold text-slate-800 mb-6">Account Information</h3>
+    <h3 class="text-xl font-bold text-slate-800 mb-6" i18n="@@profile.accountInfo">Account Information</h3>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
-        <label class="block text-sm font-medium text-slate-500 mb-1">Email Address</label>
+        <label class="block text-sm font-medium text-slate-500 mb-1" i18n="@@profile.emailLabel">Email Address</label>
         <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-slate-700 font-medium truncate">
           {{ userEmail() }}
         </div>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-slate-500 mb-1">Member since</label>
+        <label class="block text-sm font-medium text-slate-500 mb-1" i18n="@@profile.createdAtLabel">Member since</label>
         <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-slate-700 font-medium">
-          {{ createdAt() | date:'longDate':'':'en-US' }}
+          {{ createdAt() | date:'longDate' }}
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
   <hr class="border-t-1 border-slate-200 w-[95%] mx-auto">
 
   <div class="p-6 md:p-8">
-    <h3 class="text-xl font-bold text-slate-800 mb-6">Security</h3>
+      <h3 class="text-xl font-bold text-slate-800 mb-6" i18n="@@profile.security">Security</h3>
     
     @if (successMessage()) {
       <div class="mb-6 p-4 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-xl border border-emerald-100">
@@ -49,18 +49,24 @@
 
     <form (ngSubmit)="onUpdatePassword()" class="max-w-md">
       <div class="mb-5">
-        <label for="newPassword" class="block text-sm font-medium text-slate-500 mb-1">New Password</label>
+          <label for="newPassword" class="block text-sm font-medium text-slate-500 mb-1" i18n="@@profile.newPasswordLabel">New Password</label>
         <input type="password" id="newPassword" name="newPassword" [ngModel]="newPassword()" (ngModelChange)="newPassword.set($event)" required minlength="6"
-          class="w-full appearance-none bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 py-3 px-4 outline-none transition-colors" placeholder="At least 6 characters">
+            class="w-full appearance-none bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 py-3 px-4 outline-none transition-colors" i18n-placeholder="@@profile.newPasswordPlaceholder" placeholder="At least 6 characters">
       </div>
 
       <div class="mb-6">
-        <label for="confirmPassword" class="block text-sm font-medium text-slate-500 mb-1">Confirm Password</label>
+          <label for="confirmPassword" class="block text-sm font-medium text-slate-500 mb-1" i18n="@@profile.confirmPasswordLabel">Confirm Password</label>
         <input type="password" id="confirmPassword" name="confirmPassword" [ngModel]="confirmPassword()" (ngModelChange)="confirmPassword.set($event)" required minlength="6"
-          class="w-full appearance-none bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 py-3 px-4 outline-none transition-colors" placeholder="Enter it again">
+            class="w-full appearance-none bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 py-3 px-4 outline-none transition-colors" i18n-placeholder="@@profile.confirmPasswordPlaceholder" placeholder="Enter it again">
       </div>
 
-      <button type="submit" [disabled]="isUpdating()" class="w-full md:w-auto py-3 px-6 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold rounded-xl shadow-sm transition-colors focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">{{ isUpdating() ? 'Updating...' : 'Update password' }}</button>
+        <button type="submit" [disabled]="isUpdating()" class="w-full md:w-auto py-3 px-6 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold rounded-xl shadow-sm transition-colors focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+          @if (isUpdating()) {
+          <span i18n="@@profile.btnUpdating">Updating...</span>
+          } @else {
+          <span i18n="@@profile.btnSubmit">Update password</span>
+          }
+        </button>
     </form>
   </div>
 </div>

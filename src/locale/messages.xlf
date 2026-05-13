@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="app.openMenu" datatype="html">
+        <source>Open menu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.title" datatype="html">
+        <source>Forgot password ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.description" datatype="html">
+        <source> Put your email address and we&apos;ll send you a link to reset your password. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.emailLabel" datatype="html">
+        <source>Email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.emailPlaceholder" datatype="html">
+        <source>john.doe@example.com</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">18,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.btnEmailSent" datatype="html">
+        <source>Email sent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.btnReset" datatype="html">
+        <source>Reset password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.backToLogin" datatype="html">
+        <source> Back to the login page </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.error.missingEmail" datatype="html">
+        <source>Put your email address.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPassword.success.emailSent" datatype="html">
+        <source>A password reset link has been sent to your email address.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="auth.error.unknown" datatype="html">
+        <source>An unknown error occurred.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/forgot-password.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.title" datatype="html">
+        <source> Sign in to your account </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.emailLabel" datatype="html">
+        <source>Email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.emailPlaceholder" datatype="html">
+        <source>example@email.com</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">25,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.passwordLabel" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.forgotPassword" datatype="html">
+        <source> Forgot Password ? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.passwordPlaceholder" datatype="html">
+        <source>Your password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.resend.sending" datatype="html">
+        <source>Sending email...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.resend.btn" datatype="html">
+        <source>Resend confirmation email.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.btnConnecting" datatype="html">
+        <source>Connecting...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.btnSubmit" datatype="html">
+        <source>Log in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.noAccount" datatype="html">
+        <source>No account yet ? Sign up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.html</context>
+          <context context-type="linenumber">76,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.success.emailConfirmed" datatype="html">
+        <source>Email confirmed. You can now log in.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.wrongCredentials" datatype="html">
+        <source>Wrong email address or password. Please try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.emailNotConfirmed" datatype="html">
+        <source>Your email is not confirmed yet. Check your inbox.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="auth.error.server" datatype="html">
+        <source>Server error. Please retry later.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.sendingMail" datatype="html">
+        <source>Error while sending mail : <x id="PH" equiv-text="error.message"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.success.confirmationSent" datatype="html">
+        <source>Confirmation email sent ! Check your inbox.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.resend" datatype="html">
+        <source>An error occured while resending.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/login.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.title" datatype="html">
+        <source> Update your password </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.newPasswordLabel" datatype="html">
+        <source>New Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.newPasswordPlaceholder" datatype="html">
+        <source>Enter your new password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.error.minLength" datatype="html">
+        <source> Password must be at least 6 characters long. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.confirmPasswordLabel" datatype="html">
+        <source>Confirm Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.confirmPasswordPlaceholder" datatype="html">
+        <source>Confirm your new password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.error.mismatch" datatype="html">
+        <source> Passwords do not match. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.btnUpdating" datatype="html">
+        <source>Updating...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">57,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.btnSubmit" datatype="html">
+        <source>Update Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">59,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.backToLogin" datatype="html">
+        <source> Back to login </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="updatePassword.success" datatype="html">
+        <source>Your password has been successfully updated.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/login/update-password.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.subtitle" datatype="html">
+        <source> Create an account to get started </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">8,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.emailLabel" datatype="html">
+        <source>Email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.emailPlaceholder" datatype="html">
+        <source>example@email.com</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">18,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.passwordLabel" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.passwordPlaceholder" datatype="html">
+        <source>Your password (min. 6 characters)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">24,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.btnCreating" datatype="html">
+        <source>Creating an account...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.btnSubmit" datatype="html">
+        <source>Sign up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.alreadyRegistered" datatype="html">
+        <source>Already registered ? SignIn</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.html</context>
+          <context context-type="linenumber">52,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signup.success" datatype="html">
+        <source>Successfully registered ! Check your email box to confirm your email.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/auth/signup/signup.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineChart.incomes" datatype="html">
+        <source>Incomes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/line-chart/line-chart.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineChart.expenses" datatype="html">
+        <source>Expenses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/line-chart/line-chart.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineChart.balance" datatype="html">
+        <source>Balance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/line-chart/line-chart.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineChart.noData" datatype="html">
+        <source>Not enough data for history chart.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/line-chart/line-chart.html</context>
+          <context context-type="linenumber">27,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="lineChart.defaultTitle" datatype="html">
+        <source>History</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/line-chart/line-chart.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pieChart.emptyMessage" datatype="html">
+        <source>No data available.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/charts/pie-chart/pie-chart.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.title" datatype="html">
+        <source> Dashboard </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.subtitle" datatype="html">
+        <source>Smart tracking for your financial freedom.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.period.week" datatype="html">
+        <source>Week</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.period.month" datatype="html">
+        <source>Month</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.period.year" datatype="html">
+        <source>Year</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">16,19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnPreviousPeriod" datatype="html">
+        <source>Previous period</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnNextPeriod" datatype="html">
+        <source>Next period</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.incomes" datatype="html">
+        <source>Incomes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.expenses" datatype="html">
+        <source>Expenses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.balance" datatype="html">
+        <source>Balance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.savedRateTitle" datatype="html">
+        <source>Savings Rate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.savedRate" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ savingsRate() | number:&apos;1.0-1&apos; }}"/>% saved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.expensesBreakdown" datatype="html">
+        <source>Expenses Breakdown</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">73,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noExpensesYet" datatype="html">
+        <source>No expenses yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.fixedVsVariable" datatype="html">
+        <source>Fixed vs Variable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.majorExpenses" datatype="html">
+        <source>Major Expenses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">91,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.majorIncomes" datatype="html">
+        <source>Major Incomes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnExpenses" datatype="html">
+        <source>Expenses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnIncome" datatype="html">
+        <source>Income</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">100,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noExpensesList" datatype="html">
+        <source>No expenses yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">128,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noIncomesList" datatype="html">
+        <source>No incomes yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">129,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.historyTitle" datatype="html">
+        <source>History (Last 6 months)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">136,140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.projectedBudget.title" datatype="html">
+        <source>Projected Budget (Next 6 months)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">142,143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.projectedBudget.subtitle" datatype="html">
+        <source>Based on your recurring incomes and expenses.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">143,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnAddTransaction" datatype="html">
+        <source>Add transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.projectionsFor" datatype="html">
+        <source>Projections for <x id="INTERPOLATION" equiv-text="{{ selectedMonth()!.month }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">194,195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.btnCloseDetails" datatype="html">
+        <source>Close details</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.noTransactions" datatype="html">
+        <source>No transactions planned.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.html</context>
+          <context context-type="linenumber">217,221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.error.fetching" datatype="html">
+        <source>Error while fetching transactions:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.category.fixed" datatype="html">
+        <source>Fixed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.ts</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.category.variable" datatype="html">
+        <source>Variable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/dashboard/dashboard.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.title" datatype="html">
+        <source>My Profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.subtitle" datatype="html">
+        <source>Manage your account information and security.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.accountInfo" datatype="html">
+        <source>Account Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.emailLabel" datatype="html">
+        <source>Email Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.createdAtLabel" datatype="html">
+        <source>Member since</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.security" datatype="html">
+        <source>Security</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.newPasswordLabel" datatype="html">
+        <source>New Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.newPasswordPlaceholder" datatype="html">
+        <source>At least 6 characters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">54,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.confirmPasswordLabel" datatype="html">
+        <source>Confirm Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.confirmPasswordPlaceholder" datatype="html">
+        <source>Enter it again</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">60,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.btnUpdating" datatype="html">
+        <source>Updating...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.btnSubmit" datatype="html">
+        <source>Update password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.error.passwordLength" datatype="html">
+        <source>The password must be at least 6 characters long.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.error.mismatch" datatype="html">
+        <source>Passwords do not match.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.success.passwordUpdated" datatype="html">
+        <source>Your password has been updated successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="profile.error.generic" datatype="html">
+        <source>An error occurred: <x id="PH" equiv-text="error.message"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/profile/profile.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer.builtWith" datatype="html">
+        <source>Built with Angular</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/footer/footer.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sidebar.disconnect" datatype="html">
+        <source> Disconnect </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.html</context>
+          <context context-type="linenumber">32,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sidebar.category.main" datatype="html">
+        <source>Main</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.dashboard" datatype="html">
+        <source>dashboard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.transactions" datatype="html">
+        <source>transactions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sidebar.category.settings" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.profile" datatype="html">
+        <source>profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sidebar.error.logout" datatype="html">
+        <source>Unexpected error during logout:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/shared/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.title" datatype="html">
+        <source>New Transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.subtitle" datatype="html">
+        <source>Record your flow of money.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.expense" datatype="html">
+        <source> Expense </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.income" datatype="html">
+        <source> Income </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.amount" datatype="html">
+        <source>Amount</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currency.symbol" datatype="html">
+        <source>€</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.amountPlaceholder" datatype="html">
+        <source>0.00</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">29,32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">34,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.description" datatype="html">
+        <source>Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.descPlaceholder" datatype="html">
+        <source>e.g. Weekly Groceries</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">36,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">41,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.category" datatype="html">
+        <source>Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.date" datatype="html">
+        <source>Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.recurring" datatype="html">
+        <source>This is a recurring transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">69,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">73,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.repeatEvery" datatype="html">
+        <source>Repeat Every</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.freq.weeks" datatype="html">
+        <source>Weeks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">87,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.freq.months" datatype="html">
+        <source>Months</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">88,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.freq.years" datatype="html">
+        <source>Years</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transaction.endDate" datatype="html">
+        <source>End Date (Optional)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.btnSaving" datatype="html">
+        <source>Saving...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">109,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.btnSubmit" datatype="html">
+        <source>Save Transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">111,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn.cancel" datatype="html">
+        <source> Cancel </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addTransaction.error.console" datatype="html">
+        <source>Error while adding the transaction:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/add-transaction/add-transaction.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.title" datatype="html">
+        <source>Edit Transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.subtitle" datatype="html">
+        <source>Update your transaction details.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.btnUpdating" datatype="html">
+        <source>Updating...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">111,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.btnSubmit" datatype="html">
+        <source>Update Transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">113,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn.cancelAndGoBack" datatype="html">
+        <source> Cancel and go back </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.html</context>
+          <context context-type="linenumber">120,121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.error.loading" datatype="html">
+        <source>Error while loading the transaction:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTransaction.error.updating" datatype="html">
+        <source>Error while updating the transaction:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/edit-transaction/edit-transaction.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.title" datatype="html">
+        <source> Your Transactions </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.subtitle" datatype="html">
+        <source>Manage your financial history.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.filter.all" datatype="html">
+        <source>All Types</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.filter.oneTime" datatype="html">
+        <source>One-time Only</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.filter.recurring" datatype="html">
+        <source>Recurring Only</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.btnPreviousPeriod" datatype="html">
+        <source>Previous period</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.btnNextPeriod" datatype="html">
+        <source>Next period</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.recurringLabel" datatype="html">
+        <source>Recurring</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn.edit" datatype="html">
+        <source>Edit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn.delete" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.empty" datatype="html">
+        <source> No transactions found. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.html</context>
+          <context context-type="linenumber">98,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.error.fetching" datatype="html">
+        <source>Error while fetching transactions:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.confirmDelete" datatype="html">
+        <source>Are you sure you want to delete this transaction? (If this is a recurring transaction, it will be deleted completely)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.ts</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="transactions.error.deleting" datatype="html">
+        <source>Error while deleting transaction:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/transaction/transactions/transactions.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.food" datatype="html">
+        <source>Food</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.housing" datatype="html">
+        <source>Housing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.transport" datatype="html">
+        <source>Transport</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.health" datatype="html">
+        <source>Health</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.entertainment" datatype="html">
+        <source>Entertainment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.subscriptions" datatype="html">
+        <source>Subscriptions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.other" datatype="html">
+        <source>Other</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.salary" datatype="html">
+        <source>Salary</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.bonus" datatype="html">
+        <source>Bonus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.refund" datatype="html">
+        <source>Refund</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category.sales" datatype="html">
+        <source>Sales</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/constants/categories.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

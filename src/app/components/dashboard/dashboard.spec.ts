@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { DashboardComponent } from './dashboard';
 import { SupabaseService } from '../../services/supabase';
@@ -36,6 +37,7 @@ describe('DashboardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DashboardComponent],
       providers: [
+        provideZonelessChangeDetection(),
         { provide: SupabaseService, useValue: mockSupabaseService },
         { provide: RecurrenceService, useValue: mockRecurrenceService },
         { provide: Router, useValue: mockRouter }
@@ -69,7 +71,7 @@ describe('DashboardComponent', () => {
       fixture.detectChanges();
       await vi.runAllTimersAsync();
       
-      expect(consoleSpy).toHaveBeenCalledWith('Erreur lors de la récupération des transactions:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith('Error while fetching transactions:', expect.any(Error));
       expect(component.isLoading()).toBe(false);
     });
   });
@@ -77,9 +79,9 @@ describe('DashboardComponent', () => {
   describe('Metrics Calculation', () => {
     it('should correctly calculate income, expenses, balance, and savings rate', async () => {
       const mockTxs = [
-        { id: 1, type: 'income', amount: 3000, category: 'Salary', isRecurring: true, date: new Date('2024-05-10T12:00:00Z') },
-        { id: 2, type: 'expense', amount: 1000, category: 'Housing', isRecurring: true, date: new Date('2024-05-11T12:00:00Z') },
-        { id: 3, type: 'expense', amount: 500, category: 'Food', isRecurring: false, date: new Date('2024-05-12T12:00:00Z') }
+        { id: 1, type: 'income', amount: 3000, category: 'salary', isRecurring: true, date: new Date('2024-05-10T12:00:00Z') },
+        { id: 2, type: 'expense', amount: 1000, category: 'housing', isRecurring: true, date: new Date('2024-05-11T12:00:00Z') },
+        { id: 3, type: 'expense', amount: 500, category: 'food', isRecurring: false, date: new Date('2024-05-12T12:00:00Z') }
       ];
 
       mockGetTransactions.mockResolvedValue({ data: mockTxs, error: null });
@@ -99,7 +101,7 @@ describe('DashboardComponent', () => {
 
     it('should handle zero income gracefully (0% savings rate)', async () => {
       const mockTxs = [
-        { id: 1, type: 'expense', amount: 500, category: 'Food', isRecurring: false, date: new Date('2024-05-12T12:00:00Z') }
+        { id: 1, type: 'expense', amount: 500, category: 'food', isRecurring: false, date: new Date('2024-05-12T12:00:00Z') }
       ];
 
       mockGetTransactions.mockResolvedValue({ data: mockTxs, error: null });
@@ -187,8 +189,8 @@ describe('DashboardComponent', () => {
 
     it('should display calculated metrics correctly in the DOM', async () => {
       const mockTxs = [
-        { id: 1, type: 'income', amount: 2000, category: 'Salary', isRecurring: true, date: new Date('2024-05-10T12:00:00Z') },
-        { id: 2, type: 'expense', amount: 500, category: 'Food', isRecurring: false, date: new Date('2024-05-11T12:00:00Z') }
+        { id: 1, type: 'income', amount: 2000, category: 'salary', isRecurring: true, date: new Date('2024-05-10T12:00:00Z') },
+        { id: 2, type: 'expense', amount: 500, category: 'food', isRecurring: false, date: new Date('2024-05-11T12:00:00Z') }
       ];
 
       mockGetTransactions.mockResolvedValue({ data: mockTxs, error: null });
@@ -202,7 +204,8 @@ describe('DashboardComponent', () => {
 
       expect(metricsEl[0].nativeElement.textContent).toContain('2,000');
       expect(metricsEl[1].nativeElement.textContent).toContain('500');
-      expect(metricsEl[2].nativeElement.textContent).toContain('+1,500');
+      expect(metricsEl[2].nativeElement.textContent).toContain('1,500');
     });
   });
 });
+

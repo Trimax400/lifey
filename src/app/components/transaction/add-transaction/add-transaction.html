@@ -1,7 +1,7 @@
 <div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-3xl shadow-xl border border-slate-100">
     <header class="mb-8">
-        <h2 class="text-2xl font-black text-slate-800">New Transaction</h2>
-        <p class="text-slate-500 text-sm font-medium">Record your flow of money.</p>
+        <h2 class="text-2xl font-black text-slate-800" i18n="@@addTransaction.title">New Transaction</h2>
+        <p class="text-slate-500 text-sm font-medium" i18n="@@addTransaction.subtitle">Record your flow of money.</p>
     </header>
 
     <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="space-y-6">
@@ -9,41 +9,41 @@
         <div class="flex p-1 bg-slate-100 rounded-xl">
             <button type="button" (click)="setType('expense')"
                 [class]="transactionForm.get('type')?.value === 'expense' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500'"
-                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all">
+                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all" i18n="@@transaction.expense">
                 Expense
             </button>
             <button type="button" (click)="setType('income')"
                 [class]="transactionForm.get('type')?.value === 'income' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500'"
-                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all">
+                class="flex-1 py-2 text-sm font-bold rounded-lg transition-all" i18n="@@transaction.income">
                 Income
             </button>
         </div>
 
         <div>
-            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Amount</label>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.amount">Amount</label>
             <div class="relative">
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold" i18n="@@currency.symbol">€</span>
                 <input type="number" formControlName="amount"
                     class="w-full pl-10 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-2xl font-mono focus:ring-2 focus:ring-emerald-500 transition-all"
-                    placeholder="0.00">
+                    i18n-placeholder="@@transaction.amountPlaceholder" placeholder="0.00">
             </div>
         </div>
 
         <div>
-            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Description</label>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.description">Description</label>
             <input type="text" formControlName="label"
                 class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 transition-all"
-                placeholder="e.g. Weekly Groceries">
+                i18n-placeholder="@@addTransaction.descPlaceholder" placeholder="e.g. Weekly Groceries">
         </div>
 
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Category</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.category">Category</label>
                 <div class="relative">
                     <select formControlName="category"
                         class="appearance-none w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 pr-10 cursor-pointer">
-                        @for (category of currentCategories; track category) {
-                        <option [value]="category">{{ category }}</option>
+                        @for (category of currentCategories; track category.id) {
+                        <option [value]="category.id">{{ category.label }}</option>
                         }
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
@@ -56,7 +56,7 @@
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Date</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.date">Date</label>
                 <input type="date" formControlName="date"
                     class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 cursor-pointer">
             </div>
@@ -66,14 +66,13 @@
             <label class="flex items-center space-x-3 cursor-pointer">
                 <input type="checkbox" formControlName="isRecurring"
                     class="w-5 h-5 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
-                <span class="text-sm font-bold text-slate-700">This is a recurring transaction</span>
+            <span class="text-sm font-bold text-slate-700" i18n="@@transaction.recurring">This is a recurring transaction</span>
             </label>
 
             @if (transactionForm.get('isRecurring')?.value) {
             <div class="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
                 <div>
-                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Repeat
-                        Every</label>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.repeatEvery">Repeat Every</label>
                     <div class="flex gap-2">
                         <input type="number" formControlName="recurrenceInterval" min="1"
                             class="w-20 px-4 py-3 bg-white border-none rounded-xl focus:ring-2 focus:ring-emerald-500 shadow-sm text-center">
@@ -81,9 +80,9 @@
                         <div class="relative flex-1">
                             <select formControlName="frequency"
                                 class="appearance-none w-full px-4 py-3 bg-white border-none rounded-xl focus:ring-2 focus:ring-emerald-500 shadow-sm pr-10 cursor-pointer">
-                                <option value="weekly">Weeks</option>
-                                <option value="monthly">Months</option>
-                                <option value="yearly">Years</option>
+                                <option value="weekly" i18n="@@transaction.freq.weeks">Weeks</option>
+                                <option value="monthly" i18n="@@transaction.freq.months">Months</option>
+                                <option value="yearly" i18n="@@transaction.freq.years">Years</option>
                             </select>
                             <div
                                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
@@ -96,8 +95,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">End Date
-                        (Optional)</label>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" i18n="@@transaction.endDate">End Date (Optional)</label>
                     <input type="date" formControlName="endDate"
                         class="w-full px-4 py-3 bg-white border-none rounded-xl focus:ring-2 focus:ring-emerald-500 shadow-sm cursor-pointer">
                 </div>
@@ -107,12 +105,16 @@
 
         <button type="submit" [disabled]="transactionForm.invalid || isLoading()"
             class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 text-white font-bold rounded-2xl shadow-lg shadow-emerald-100 transition-all transform active:scale-95">
-            {{ isLoading() ? 'Saving...' : 'Save Transaction' }}
+            @if (isLoading()) {
+            <span i18n="@@addTransaction.btnSaving">Saving...</span>
+            } @else {
+            <span i18n="@@addTransaction.btnSubmit">Save Transaction</span>
+            }
         </button>
 
         <div class="text-center">
             <button type="button" (click)="goBack()"
-                class="text-sm text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer">
+                class="text-sm text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer" i18n="@@btn.cancel">
                 Cancel
             </button>
         </div>

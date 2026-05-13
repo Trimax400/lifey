@@ -50,12 +50,12 @@ export class Profile implements OnInit {
     const confirmPass = this.confirmPassword();
 
     if (!newPass || newPass.length < 6) {
-      this.errorMessage.set('The password must be at least 6 characters long.');
+      this.errorMessage.set($localize`:@@profile.error.passwordLength:The password must be at least 6 characters long.`);
       return;
     }
 
     if (newPass !== confirmPass) {
-      this.errorMessage.set('Passwords do not match.');
+      this.errorMessage.set($localize`:@@profile.error.mismatch:Passwords do not match.`);
       return;
     }
 
@@ -64,11 +64,11 @@ export class Profile implements OnInit {
       const { error } = await this.supabaseService.updatePassword(newPass);
       if (error) throw error;
 
-      this.successMessage.set('Your password has been updated successfully.');
+      this.successMessage.set($localize`:@@profile.success.passwordUpdated:Your password has been updated successfully.`);
       this.newPassword.set('');
       this.confirmPassword.set('');
     } catch (error: any) {
-      this.errorMessage.set('An error occurred: ' + error.message);
+      this.errorMessage.set($localize`:@@profile.error.generic:An error occurred: ${error.message}`);
     } finally {
       this.isUpdating.set(false);
       this.cdr.detectChanges();
