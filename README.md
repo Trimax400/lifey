@@ -67,7 +67,13 @@ ng test
 ## ⏩ Roadmap
 _This roadmap is indicative and evolves based on technical feasibility and user feedback._
 
-- UI/UX Enhancements: Implementation of Dark Mode and French localization.
 - Banking Open API: Automated transaction syncing via secure bank integration.
 - Onboarding: In-app tutorials and interactive user documentation.
 - Social & Collaborative: Shared budgets and group expense tracking for trips or shared living.
+
+## Version 1.1.0 Patch Note:
+- Features :
+   - Dark mode added. You can now change from system preference to light or dark forced mode.
+   - Localization added. You can now display the app in english and in french !
+- Changes :
+   - Removed the sidebar on unauthentified pages. A small component has been added on those pages to switch light mode and localization. 
