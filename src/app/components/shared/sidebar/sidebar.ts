@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher';
+import { ThemeSwitcherComponent } from '../theme-switcher/theme-switcher';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterModule, LanguageSwitcherComponent],
+  imports: [RouterModule, LanguageSwitcherComponent, ThemeSwitcherComponent],
   templateUrl: './sidebar.html'
 })
 export class SidebarComponent {
