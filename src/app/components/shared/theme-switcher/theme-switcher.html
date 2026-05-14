@@ -1,12 +1,12 @@
-<div class="flex items-center p-1 rounded-full border border-card-border bg-card/50 backdrop-blur-sm shadow-sm">
+<div class="flex items-center p-1 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 backdrop-blur-sm shadow-sm">
   @for (mode of modes; track mode.id) {
     <button
       (click)="setTheme(mode.id)"
       [title]="mode.label"
       class="relative flex items-center justify-center h-8 w-10 rounded-full transition-all duration-200 cursor-pointer"
       [ngClass]="activeTheme() === mode.id 
-        ? 'bg-primary text-primary-foreground shadow-md scale-105 z-10' 
-        : 'text-muted hover:text-foreground opacity-60 hover:opacity-100 hover:bg-muted/10'"
+        ? 'bg-emerald-600 text-white shadow-md scale-105 z-10' 
+        : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 opacity-60 hover:opacity-100 hover:bg-slate-100 dark:hover:bg-slate-800'"
     >
       <lucide-icon [img]="mode.icon" [size]="16" [strokeWidth]="2.5"></lucide-icon>
     </button>
