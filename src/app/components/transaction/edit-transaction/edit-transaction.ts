@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../../../constants/categories';
 
 @Component({
   selector: 'app-edit-transaction',
@@ -22,10 +23,10 @@ export class EditTransaction implements OnInit {
   transactionForm!: FormGroup;
   transactionId!: string;
 
-  expenseCategories = ['Food', 'Housing', 'Transport', 'Health', 'Entertainment', 'Subscriptions', 'Other'];
-  incomeCategories = ['Salary', 'Bonus', 'Refund', 'Sales', 'Other'];
+  expenseCategories = EXPENSE_CATEGORIES;
+  incomeCategories = INCOME_CATEGORIES;
 
-  get currentCategories(): string[] {
+  get currentCategories() {
     if (!this.transactionForm) return this.expenseCategories;
     return this.transactionForm.get('type')?.value === 'income' 
       ? this.incomeCategories 
@@ -39,7 +40,7 @@ export class EditTransaction implements OnInit {
       type: ['expense', Validators.required],
       amount: [null, [Validators.required, Validators.min(0.01)]],
       label: ['', [Validators.required, Validators.minLength(3)]],
-      category: ['Food', Validators.required],
+      category: [this.expenseCategories[0].id, Validators.required],
       date: [new Date().toISOString().substring(0, 10), Validators.required],
       isRecurring: [false],
       recurrenceInterval: [1, [Validators.min(1)]],
@@ -50,7 +51,7 @@ export class EditTransaction implements OnInit {
     this.loadTransaction();
 
     this.transactionForm.get('type')?.valueChanges.subscribe(type => {
-      const defaultCategory = type === 'income' ? 'Salary' : 'Food';
+      const defaultCategory = type === 'income' ? this.incomeCategories[0].id : this.expenseCategories[0].id;
       this.transactionForm.get('category')?.setValue(defaultCategory);
     });
   }
@@ -68,7 +69,7 @@ export class EditTransaction implements OnInit {
         }, { emitEvent: false });
       }
     } catch (error) {
-      console.error('Erreur lors du chargement de la transaction:', error);
+      console.error($localize`:@@editTransaction.error.loading:Error while loading the transaction:`, error);
       this.goBack();
     } finally {
       this.isLoading.set(false);
@@ -102,7 +103,7 @@ export class EditTransaction implements OnInit {
         
         this.goBack();
       } catch (error) {
-        console.error('Erreur lors de la modification de la transaction:', error);
+        console.error($localize`:@@editTransaction.error.updating:Error while updating the transaction:`, error);
       } finally {
         this.isSaving.set(false);
         this.cdr.detectChanges();

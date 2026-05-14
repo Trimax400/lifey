@@ -52,13 +52,13 @@ export class UpdatePasswordComponent {
       if (error) {
         this.errorMessage.set(error.message);
       } else {
-        this.message.set('Your password has been successfully updated.');
+        this.message.set($localize`:@@updatePassword.success:Your password has been successfully updated.`);
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000);
       }
     } catch (err: any) {
-      this.errorMessage.set(err.message || 'An unknown error occurred.');
+      this.errorMessage.set(err.message || $localize`:@@auth.error.unknown:An unknown error occurred.`);
     } finally {
       this.isLoading.set(false);
     }

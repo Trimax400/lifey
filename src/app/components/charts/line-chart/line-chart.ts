@@ -10,5 +10,5 @@ import { CommonModule } from '@angular/common';
 export class LineChartComponent {
   @Input() data: { label: string }[] = [];
   @Input() paths: { income: string, expenses: string, balance: string } = { income: '', expenses: '', balance: '' };
-  @Input() title: string = 'History';
+  @Input() title: string = $localize`:@@lineChart.defaultTitle:History`;
 }

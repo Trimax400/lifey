@@ -13,16 +13,16 @@ export class SidebarComponent {
 
   navCategories = signal([
     {
-      title: 'Main',
+      title: $localize`:@@sidebar.category.main:Main`,
       links: [
-        { href: '/dashboard', label: 'dashboard' },
-        { href: '/transactions', label: 'transactions' },
+        { href: '/dashboard', label: $localize`:@@nav.dashboard:dashboard` },
+        { href: '/transactions', label: $localize`:@@nav.transactions:transactions` },
       ]
     },
     {
-      title: 'Settings',
+      title: $localize`:@@sidebar.category.settings:Settings`,
       links: [
-        { href: '/profile', label: 'profile'}
+        { href: '/profile', label: $localize`:@@nav.profile:profile`}
       ]
     }
   ]);
@@ -36,7 +36,7 @@ export class SidebarComponent {
         this.router.navigate(['/login']);
       }
     } catch (error) {
-      console.error('Erreur inattendue lors de la déconnexion:', error);
+      console.error($localize`:@@sidebar.error.logout:Unexpected error during logout:`, error);
     }
   }
 }

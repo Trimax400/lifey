@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { Transactions } from './transactions';
 import { SupabaseService } from '../../../services/supabase';
@@ -36,6 +37,7 @@ describe('TransactionsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [Transactions],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([]),
         { provide: SupabaseService, useValue: mockSupabaseService },
         { provide: RecurrenceService, useValue: mockRecurrenceService }
@@ -72,7 +74,7 @@ describe('TransactionsComponent', () => {
       fixture.detectChanges();
       await vi.runAllTimersAsync();
       
-      expect(consoleSpy).toHaveBeenCalledWith('Erreur lors de la récupération des transactions:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith('Error while fetching transactions:', expect.any(Error));
       expect(component.isLoading()).toBe(false);
     });
   });

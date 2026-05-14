@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase';
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../../../constants/categories';
 
 @Component({
   selector: 'app-add-transaction',
@@ -18,10 +19,10 @@ export class AddTransactionComponent implements OnInit {
   isLoading = signal<boolean>(false);
   transactionForm!: FormGroup;
 
-  expenseCategories = ['Food', 'Housing', 'Transport', 'Health', 'Entertainment', 'Subscriptions', 'Other'];
-  incomeCategories = ['Salary', 'Bonus', 'Refund', 'Sales', 'Other'];
+  expenseCategories = EXPENSE_CATEGORIES;
+  incomeCategories = INCOME_CATEGORIES;
 
-  get currentCategories(): string[] {
+  get currentCategories() {
     if (!this.transactionForm) return this.expenseCategories;
     return this.transactionForm.get('type')?.value === 'income' 
       ? this.incomeCategories 
@@ -34,7 +35,7 @@ export class AddTransactionComponent implements OnInit {
       type: ['expense', Validators.required],
       amount: [null, [Validators.required, Validators.min(0.01)]],
       label: ['', [Validators.required, Validators.minLength(3)]],
-      category: ['Food', Validators.required],
+      category: [this.expenseCategories[0].id, Validators.required],
       date: [new Date().toISOString().substring(0, 10), Validators.required],
       isRecurring: [false],
       recurrenceInterval: [1, [Validators.min(1)]],
@@ -43,7 +44,7 @@ export class AddTransactionComponent implements OnInit {
     });
 
     this.transactionForm.get('type')?.valueChanges.subscribe(type => {
-      const defaultCategory = type === 'income' ? 'Salary' : 'Food';
+      const defaultCategory = type === 'income' ? this.incomeCategories[0].id : this.expenseCategories[0].id;
       this.transactionForm.get('category')?.setValue(defaultCategory);
     });
   }
@@ -74,7 +75,7 @@ export class AddTransactionComponent implements OnInit {
         
         this.router.navigate(['/dashboard']);
       } catch (error) {
-        console.error('Erreur lors de l\'ajout de la transaction:', error);
+        console.error($localize`:@@addTransaction.error.console:Error while adding the transaction:`, error);
       } finally {
         this.isLoading.set(false);
       }

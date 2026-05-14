@@ -39,11 +39,11 @@ export class SignupComponent {
       if (error) {
         this.errorMessage.set(error.message);
       } else {
-        this.successMessage.set('Successfully registered ! Check your email box to confirm your email.')
+        this.successMessage.set($localize`:@@signup.success:Successfully registered ! Check your email box to confirm your email.`)
         this.signupForm.reset();
       }
     } catch (err: any) {
-      this.errorMessage.set('Une erreur inattendue est survenue.');
+      this.errorMessage.set($localize`:@@auth.error.unknown:An unknown error occurred.`);
     } finally {
       this.isLoading.set(false);
     }

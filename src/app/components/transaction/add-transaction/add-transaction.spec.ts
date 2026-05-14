@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { AddTransactionComponent } from './add-transaction';
 import { SupabaseService } from '../../../services/supabase';
@@ -24,6 +25,7 @@ describe('AddTransactionComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AddTransactionComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([]),
         { provide: SupabaseService, useValue: mockSupabaseService }
       ]
@@ -49,7 +51,7 @@ describe('AddTransactionComponent', () => {
     it('should initialize the form with default values', () => {
       expect(component.transactionForm).toBeDefined();
       expect(component.transactionForm.get('type')?.value).toBe('expense');
-      expect(component.transactionForm.get('category')?.value).toBe('Food');
+      expect(component.transactionForm.get('category')?.value).toBe('food');
       expect(component.transactionForm.get('date')?.value).toBe('2024-05-15');
       expect(component.transactionForm.get('isRecurring')?.value).toBe(false);
       expect(component.transactionForm.valid).toBe(false); 
@@ -72,11 +74,11 @@ describe('AddTransactionComponent', () => {
     it('should update category when type changes', () => {
       component.setType('income');
       expect(component.transactionForm.get('type')?.value).toBe('income');
-      expect(component.transactionForm.get('category')?.value).toBe('Salary');
+      expect(component.transactionForm.get('category')?.value).toBe('salary');
 
       component.setType('expense');
       expect(component.transactionForm.get('type')?.value).toBe('expense');
-      expect(component.transactionForm.get('category')?.value).toBe('Food');
+      expect(component.transactionForm.get('category')?.value).toBe('food');
     });
   });
 
@@ -107,7 +109,7 @@ describe('AddTransactionComponent', () => {
         type: 'expense',
         amount: 50,
         label: 'Internet Bill',
-        category: 'Food',
+        category: 'food',
         isRecurring: true,
         frequency: 'monthly',
         recurrenceInterval: 1
@@ -128,7 +130,7 @@ describe('AddTransactionComponent', () => {
 
       await component.onSubmit();
 
-      expect(consoleSpy).toHaveBeenCalledWith('Erreur lors de l\'ajout de la transaction:', mockError);
+      expect(consoleSpy).toHaveBeenCalledWith('Error while adding the transaction:', mockError);
       expect(router.navigate).not.toHaveBeenCalled();
       expect(component.isLoading()).toBe(false);
     });

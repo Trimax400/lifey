@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { SidebarComponent } from './sidebar';
 import { SupabaseService } from '../../../services/supabase';
@@ -21,6 +22,7 @@ describe('SidebarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SidebarComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([]),
         { provide: SupabaseService, useValue: mockSupabaseService }
       ]
@@ -76,7 +78,7 @@ describe('SidebarComponent', () => {
 
       await component.logout();
 
-      expect(consoleSpy).toHaveBeenCalledWith('Erreur inattendue lors de la déconnexion:', mockError);
+      expect(consoleSpy).toHaveBeenCalledWith('Unexpected error during logout:', mockError);
       expect(router.navigate).not.toHaveBeenCalled();
     });
   });

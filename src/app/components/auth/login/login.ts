@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.fragment.subscribe((fragment) => {
       if (fragment && fragment.includes('type=signup')) {
-        this.successMessage.set("Email confirmed. You can now log in.");
+        this.successMessage.set($localize`:@@login.success.emailConfirmed:Email confirmed. You can now log in.`);
       }
     });
   }
@@ -55,18 +55,18 @@ export class LoginComponent implements OnInit {
       const result: any = await this.supabaseService.signIn(email, password);
 
       if (result && result.error) {
-        this.errorMessage.set(result.error.message || 'Wrong email address or password. Please try again.');
+        this.errorMessage.set(result.error.message || $localize`:@@login.error.wrongCredentials:Wrong email address or password. Please try again.`);
         
         if (result.error.message.includes('Email not confirmed') || result.error.code === 'email_not_confirmed') {
           this.isEmailNotConfirmed.set(true);
-          this.errorMessage.set("Your email is not confirmed yet. Check your inbox.");
+          this.errorMessage.set($localize`:@@login.error.emailNotConfirmed:Your email is not confirmed yet. Check your inbox.`);
         }
       } else {
         const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
         this.router.navigateByUrl(returnUrl);
       }
     } catch (err: any) {
-      this.errorMessage.set(err?.error?.error_description || err?.error?.message || err?.message || 'Server error. Please retry later.');
+      this.errorMessage.set(err?.error?.error_description || err?.error?.message || err?.message || $localize`:@@auth.error.server:Server error. Please retry later.`);
     } finally {
       this.isLoading.set(false);
       this.cdr.detectChanges();
@@ -83,13 +83,13 @@ export class LoginComponent implements OnInit {
       const { data, error } = await this.supabaseService.resendConfirmation(email);
 
       if (error) {
-        this.errorMessage.set("Error while sending mail : " + error.message);
+        this.errorMessage.set($localize`:@@login.error.sendingMail:Error while sending mail : ${error.message}`);
       } else {
         this.isEmailNotConfirmed.set(false);
-        this.resendMessage.set("Confirmation email sent ! Check your inbox.");
+        this.resendMessage.set($localize`:@@login.success.confirmationSent:Confirmation email sent ! Check your inbox.`);
       }
     } catch (err) {
-      this.errorMessage.set("An error occured while resending.");
+      this.errorMessage.set($localize`:@@login.error.resend:An error occured while resending.`);
     } finally {
       this.isResending.set(false);
       this.cdr.detectChanges();

@@ -9,7 +9,7 @@ export class PieChartComponent implements OnInit, OnChanges {
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
   @Input() data: { label: string, value: number }[] = [];
-  @Input() emptyMessage: string = 'No data available.';
+  @Input() emptyMessage: string = $localize`:@@pieChart.emptyMessage:No data available.`;
 
   private margin = 20;
   private width = 600;

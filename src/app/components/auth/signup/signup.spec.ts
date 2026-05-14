@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { SignupComponent } from './signup';
 import { SupabaseService } from '../../../services/supabase';
@@ -20,6 +21,7 @@ describe('SignupComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SignupComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([]),
         { provide: SupabaseService, useValue: mockSupabaseService }
       ]
@@ -113,7 +115,7 @@ describe('SignupComponent', () => {
 
       await component.onSubmit();
 
-      expect(component.errorMessage()).toBe('Une erreur inattendue est survenue.');
+      expect(component.errorMessage()).toBe('An unknown error occurred.');
       expect(component.isLoading()).toBe(false);
     });
   });

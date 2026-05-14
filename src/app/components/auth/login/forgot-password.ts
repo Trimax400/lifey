@@ -22,7 +22,7 @@ export class ForgotPasswordComponent {
 
   async resetPassword() {
     if (!this.email()) {
-      this.errorMessage.set('Put your email address.');
+      this.errorMessage.set($localize`:@@forgotPassword.error.missingEmail:Put your email address.`);
       return;
     }
 
@@ -38,10 +38,10 @@ export class ForgotPasswordComponent {
       if (error) {
         this.errorMessage.set(error.message);
       } else {
-        this.message.set('A password reset link has been sent to your email address.');
+        this.message.set($localize`:@@forgotPassword.success.emailSent:A password reset link has been sent to your email address.`);
       }
     } catch (err: any) {
-      this.errorMessage.set(err.message || 'An unknown error occurred.');
+      this.errorMessage.set(err.message || $localize`:@@auth.error.unknown:An unknown error occurred.`);
     } finally {
       this.isLoading.set(false);
     }
