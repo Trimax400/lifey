@@ -1,0 +1,17 @@
+<div class="relative inline-block w-full">
+  <select 
+    (change)="onLanguageChange($event)"
+    class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-lg pl-3 pr-8 py-2 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 appearance-none cursor-pointer"
+  >
+    @for (lang of languages; track lang.code) {
+      <option [value]="lang.code" [selected]="currentLang === lang.code">
+        {{ lang.name }} ({{ lang.label }})
+      </option>
+    }
+  </select>
+  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400 dark:text-slate-500">
+    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+    </svg>
+  </div>
+</div>

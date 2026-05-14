@@ -78,7 +78,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .attr('class', (d: any) => `pie-slice slice-${d.data.label.replace(/\s+/g, '-')}`)
       .attr('d', arcGenerator)
       .attr('fill', (d: any) => this.colors(d.data.label))
-      .attr('stroke', '#ffffff')
+      .style('stroke', 'var(--pie-stroke, #ffffff)')
       .style('stroke-width', '3px')
       .style('cursor', 'pointer');
 
@@ -123,7 +123,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .text((d: any) => d.label.length > maxLabelLength ? d.label.substring(0, maxLabelLength) + '...' : d.label)
       .style('font-size', '16px')
       .style('font-family', 'sans-serif')
-      .style('fill', '#333')
+      .style('fill', 'var(--pie-text, #333)')
       .style('alignment-baseline', 'middle');
 
     legend.append('line')
@@ -131,7 +131,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .attr('y1', 32)
       .attr('x2', 250)
       .attr('y2', 32)
-      .attr('stroke', '#e0e0e0')
+      .attr('class', 'stroke-slate-200 dark:stroke-slate-800')
       .attr('stroke-width', 1)
       .style('display', (d: any, i: number) => i === this.data.length - 1 ? 'none' : 'block');
 
@@ -141,7 +141,7 @@ export class PieChartComponent implements OnInit, OnChanges {
       .text((d: any) => `${d.value} (${Math.round((d.value / total) * 100)}%)`)
       .style('font-size', '16px')
       .style('font-family', 'sans-serif')
-      .style('fill', '#333')
+      .style('fill', 'var(--pie-text, #333)')
       .style('alignment-baseline', 'middle')
       .style('text-anchor', 'end');
 

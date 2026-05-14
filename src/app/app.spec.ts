@@ -80,12 +80,12 @@ describe('AppComponent', () => {
     });
 
     it('should render the backdrop only when the menu is open', () => {
-      expect(fixture.debugElement.query(By.css('.backdrop-blur-sm'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.fixed.inset-0.z-40'))).toBeNull();
 
       component.isMobileMenuOpen.set(true);
       fixture.detectChanges();
 
-      expect(fixture.debugElement.query(By.css('.backdrop-blur-sm'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('.fixed.inset-0.z-40'))).toBeTruthy();
     });
   });
 });

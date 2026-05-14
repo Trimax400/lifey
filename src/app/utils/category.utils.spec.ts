@@ -4,7 +4,6 @@ import { getCategoryLabel } from './category.utils';
 describe('Category Utils', () => {
   describe('getCategoryLabel', () => {
     it('should return the correct label for a valid expense category ID', () => {
-      // In tests without translation, it returns the source label
       expect(getCategoryLabel('food')).toBe('Food');
       expect(getCategoryLabel('transport')).toBe('Transport');
     });
@@ -19,7 +18,6 @@ describe('Category Utils', () => {
     });
 
     it('should handle "other" category from both lists', () => {
-      // Both lists have 'other', it should find the first one or just return 'Other'
       expect(getCategoryLabel('other')).toBe('Other');
     });
   });

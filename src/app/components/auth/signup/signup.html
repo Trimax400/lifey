@@ -1,10 +1,10 @@
-<div class=" flex items-center justify-center bg-slate-50 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-2xl shadow-sm border border-slate-200">
+<div class=" flex items-center justify-center bg-slate-50 dark:bg-slate-950 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8 p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
     <div>
-      <h2 class="mt-6 text-center text-3xl font-black text-slate-800 tracking-tight">
-        Li<span class="text-emerald-600">fey</span>
+      <h2 class="mt-6 text-center text-3xl font-black text-slate-800 dark:text-white tracking-tight">
+        Li<span class="text-emerald-600 dark:text-emerald-400">fey</span>
       </h2>
-      <p class="mt-2 text-center text-sm text-slate-500 font-medium" i18n="@@signup.subtitle">
+      <p class="mt-2 text-center text-sm text-slate-500 dark:text-slate-400 font-medium" i18n="@@signup.subtitle">
         Create an account to get started
       </p>
     </div>
@@ -12,26 +12,26 @@
     <form class="mt-8 space-y-6" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="rounded-md shadow-sm flex flex-col gap-4">
         <div>
-          <label for="email-address" class="text-sm font-semibold text-slate-700" i18n="@@signup.emailLabel">Email address</label>
+          <label for="email-address" class="text-sm font-semibold text-slate-700 dark:text-slate-300" i18n="@@signup.emailLabel">Email address</label>
           <input id="email-address" type="email" autocomplete="email" required formControlName="email"
-            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 dark:border-slate-700 placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white dark:bg-slate-800 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
             i18n-placeholder="@@signup.emailPlaceholder" placeholder="example@email.com">
         </div>
         <div>
-          <label for="password" class="text-sm font-semibold text-slate-700" i18n="@@signup.passwordLabel">Password</label>
+          <label for="password" class="text-sm font-semibold text-slate-700 dark:text-slate-300" i18n="@@signup.passwordLabel">Password</label>
           <input id="password" type="password" autocomplete="new-password" required formControlName="password"
-            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-slate-300 dark:border-slate-700 placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white dark:bg-slate-800 rounded-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm"
             i18n-placeholder="@@signup.passwordPlaceholder" placeholder="Your password (min. 6 characters)">
         </div>
       </div>
 
       @if (errorMessage()) {
-      <div class="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-md">
+      <div class="text-red-500 dark:text-red-400 text-sm text-center font-medium bg-red-50 dark:bg-red-900/20 p-2 rounded-md">
         {{ errorMessage() }}
       </div>
       }
       @if (successMessage()) {
-      <div class="text-emerald-600 text-sm text-center font-medium bg-emerald-50 p-2 rounded-md">
+      <div class="text-emerald-600 dark:text-emerald-400 text-sm text-center font-medium bg-emerald-50 dark:bg-emerald-900/20 p-2 rounded-md">
         {{ successMessage() }}
       </div>
       }
@@ -49,7 +49,7 @@
 
       <div class="text-center mt-4">
         <a routerLink="/login"
-          class="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors" i18n="@@signup.alreadyRegistered">Already registered ?
+          class="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors" i18n="@@signup.alreadyRegistered">Already registered ?
           SignIn</a>
       </div>
     </form>
