@@ -12,7 +12,7 @@ describe('LanguageSwitcherComponent', () => {
       imports: [LanguageSwitcherComponent],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: LOCALE_ID, useValue: 'en-US' } // Langue injectée par défaut
+        { provide: LOCALE_ID, useValue: 'en-US' }
       ]
     }).compileComponents();
 
@@ -24,6 +24,7 @@ describe('LanguageSwitcherComponent', () => {
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
+    window.history.pushState({}, '', '/');
   });
 
   it('should create', () => {
@@ -39,7 +40,7 @@ describe('LanguageSwitcherComponent', () => {
   });
 
   it('should redirect when switching language', () => {
-    vi.stubGlobal('location', { pathname: '/en/dashboard' });
+    window.history.pushState({}, '', '/en/dashboard');
     const redirectSpy = vi.spyOn(component as any, 'redirectTo').mockImplementation(() => {});
 
     component.switchLanguage('fr');
@@ -48,7 +49,7 @@ describe('LanguageSwitcherComponent', () => {
   });
 
   it('should not redirect if the language is already selected', () => {
-    vi.stubGlobal('location', { pathname: '/en/dashboard' });
+    window.history.pushState({}, '', '/en/dashboard');
     const redirectSpy = vi.spyOn(component as any, 'redirectTo').mockImplementation(() => {});
 
     component.switchLanguage('en');
@@ -57,7 +58,7 @@ describe('LanguageSwitcherComponent', () => {
   });
 
   it('should handle root path or no prefix', () => {
-    vi.stubGlobal('location', { pathname: '/dashboard' });
+    window.history.pushState({}, '', '/dashboard');
     const redirectSpy = vi.spyOn(component as any, 'redirectTo').mockImplementation(() => {});
 
     component.switchLanguage('fr');

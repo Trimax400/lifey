@@ -10,7 +10,6 @@ describe('ThemeSwitcherComponent', () => {
   let document: Document;
 
   beforeEach(async () => {
-    // Mock localStorage
     const localStorageMock = (() => {
       let store: { [key: string]: string } = {};
       return {
@@ -21,7 +20,6 @@ describe('ThemeSwitcherComponent', () => {
     })();
     vi.stubGlobal('localStorage', localStorageMock);
 
-    // Mock matchMedia
     vi.stubGlobal('matchMedia', vi.fn().mockImplementation(query => ({
       matches: false,
       media: query,
@@ -63,7 +61,6 @@ describe('ThemeSwitcherComponent', () => {
   it('should initialize from localStorage', async () => {
     localStorage.setItem('theme', 'dark');
     
-    // Re-create component to trigger constructor logic
     fixture = TestBed.createComponent(ThemeSwitcherComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -109,7 +106,6 @@ describe('ThemeSwitcherComponent', () => {
       dispatchEvent: vi.fn(),
     })));
 
-    // Re-create component to pick up the new matchMedia mock during initialization/effect
     fixture = TestBed.createComponent(ThemeSwitcherComponent);
     component = fixture.componentInstance;
     component.setTheme('system');
